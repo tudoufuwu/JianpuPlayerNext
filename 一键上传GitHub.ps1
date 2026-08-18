@@ -109,8 +109,8 @@ try {
 
     if ($PublishRelease) {
         $tag = "v$version"
-        git rev-parse $tag 2>$null | Out-Null
-        if ($LASTEXITCODE -ne 0) { git tag -a $tag -m "JianpuPlayerNext $version" }
+        $existingTag = @(git tag --list $tag)
+        if (-not ($existingTag -contains $tag)) { git tag -a $tag -m "JianpuPlayerNext $version" }
         git push origin $tag
         gh release view $tag --repo $repo 2>$null | Out-Null
         if ($LASTEXITCODE -eq 0) {
