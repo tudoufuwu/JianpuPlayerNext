@@ -89,8 +89,14 @@ try {
     $repo = "$owner/$RepoName"
     $remoteNames = @(git remote)
     if (-not ($remoteNames -contains "origin")) {
+        # gh emits a native error for a missing repo; temporarily relax PowerShell's
+        # native-error policy so that the existence check remains a boolean.
+        $previousErrorAction = $ErrorActionPreference
+        $ErrorActionPreference = "Continue"
         gh repo view $repo 2>$null | Out-Null
-        if ($LASTEXITCODE -eq 0) {
+        $repoExists = ($LASTEXITCODE -eq 0)
+        $ErrorActionPreference = $previousErrorAction
+        if ($repoExists) {
             git remote add origin "https://github.com/$repo.git"
         } else {
             gh repo create $repo "--$Visibility" --source . --remote origin
