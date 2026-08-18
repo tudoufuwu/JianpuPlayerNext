@@ -112,8 +112,12 @@ try {
         $existingTag = @(git tag --list $tag)
         if (-not ($existingTag -contains $tag)) { git tag -a $tag -m "JianpuPlayerNext $version" }
         git push origin $tag
+        $previousErrorAction = $ErrorActionPreference
+        $ErrorActionPreference = "Continue"
         gh release view $tag --repo $repo 2>$null | Out-Null
-        if ($LASTEXITCODE -eq 0) {
+        $releaseExists = ($LASTEXITCODE -eq 0)
+        $ErrorActionPreference = $previousErrorAction
+        if ($releaseExists) {
             gh release upload $tag $asset --repo $repo --clobber
         } else {
             gh release create $tag $asset --repo $repo --generate-notes --title "JianpuPlayerNext $version"
