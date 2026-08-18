@@ -87,8 +87,8 @@ try {
 
     $owner = gh api user --jq .login
     $repo = "$owner/$RepoName"
-    git remote get-url origin 2>$null | Out-Null
-    if ($LASTEXITCODE -ne 0) {
+    $remoteNames = @(git remote)
+    if (-not ($remoteNames -contains "origin")) {
         gh repo view $repo 2>$null | Out-Null
         if ($LASTEXITCODE -eq 0) {
             git remote add origin "https://github.com/$repo.git"
