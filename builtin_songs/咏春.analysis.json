@@ -1,0 +1,44 @@
+{
+  "metadata": {
+    "source": "F:\\codexai\\01\\source_audio\\咏春_七朵_BV1dyFNzoEYi.wav",
+    "duration_seconds": 269.675,
+    "tempo_detected": 76.0,
+    "tonic": "C",
+    "tonic_midi_for_middle_1": 60,
+    "events": 3,
+    "voiced_ratio": 0.0025,
+    "method": "librosa-pyin+hpss; major-scale constrained; quarter-beat quantized"
+  },
+  "notes": [
+    {
+      "start": 146.90104308390022,
+      "end": 147.0055328798186,
+      "midi": 0,
+      "degree": 2,
+      "octave": 0,
+      "key": "s",
+      "beats": 0.25,
+      "confidence": 0.7571601330199089
+    },
+    {
+      "start": 256.97523809523807,
+      "end": 257.20743764172335,
+      "midi": 0,
+      "degree": 2,
+      "octave": 0,
+      "key": "s",
+      "beats": 0.25,
+      "confidence": 0.8266685594724995
+    },
+    {
+      "start": 257.4976870748299,
+      "end": 257.6021768707483,
+      "midi": 0,
+      "degree": 1,
+      "octave": -1,
+      "key": "z",
+      "beats": 0.25,
+      "confidence": 0.6860828109301791
+    }
+  ]
+}

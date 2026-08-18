@@ -1,0 +1,26 @@
+{
+  "title": "归零",
+  "status": "audio_derived_candidate_done",
+  "requested_at": "2026-08-18",
+  "candidate_txt": "music_player_next/builtin_songs/归零.txt",
+  "source": "https://www.bilibili.com/video/BV1nN411879y",
+  "selected_version": "魔鬼花园",
+  "events": 600,
+  "beat_ms": 534,
+  "requires": "in-game audition before final",
+  "source_search": {
+    "builtin_songs": false,
+    "source_scores": false,
+    "source_audio": false,
+    "public_metadata_search": "2026-08-18",
+    "candidate_versions": [
+      {"artist_or_version": "林忆莲 / Sandy Lam", "work": "归零 / Return to Zero", "youtube_id": "WSEDjKJ-XAE"},
+      {"artist_or_version": "TRASH 乐团", "work": "归零 / Start From Zero", "youtube_id": "zrI6xW1BPLo"},
+      {"artist_or_version": "慕一", "work": "归零", "youtube_id": "4WbYL-1l99k"},
+      {"artist_or_version": "华晨宇、黄绮珊（声生不息宝岛季）", "work": "归零", "youtube_id": "YbpdAq4iRGM"},
+      {"artist_or_version": "陈妍希、容祖儿、阿兰（乘风破浪的姐姐2）", "work": "归零", "youtube_id": "QE_rvR9PvtA"},
+      {"artist_or_version": "骇爪麦晓雯（三角洲行动主题曲）", "work": "归零 / Got You", "youtube_id": "CpMzNS-6Eb4"}
+    ]
+  },
+  "next_step": "In-game audition; if a different same-name version is intended, create a separate task instead of overwriting this candidate."
+}

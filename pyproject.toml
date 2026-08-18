@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jianpu-player-next"
+version = "1.0.0b33"
+description = "Windows 21-key song library, MIDI converter and game performance tool"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = [
+  "mido>=1.3,<2",
+]
+
+[project.optional-dependencies]
+build = ["pyinstaller>=6.0,<7"]
+
+[tool.setuptools]
+py-modules = ["app", "player_core", "midi_importer", "library_store", "preview_audio"]

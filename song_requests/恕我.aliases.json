@@ -1,0 +1,12 @@
+{
+  "canonical_title": "恕我",
+  "path": "builtin_songs/恕我.txt",
+  "aliases": ["肘我", "一曲肘我", "一曲《肘我》"],
+  "status": "existing_verified",
+  "recommended_beat_ms": 533,
+  "source_artifacts": [
+    "F:/codexai/01/source_audio/恕我_官方全曲.m4a",
+    "F:/codexai/01/source_audio/恕我_GAME_分离人声/恕我_官方全曲_(vocals)_vocals_mel_band_roformer.mid",
+    "F:/codexai/01/source_audio/恕我_音频分析.json"
+  ]
+}

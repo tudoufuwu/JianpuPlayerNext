@@ -1,0 +1,43 @@
+{
+  "title": "偶像 / アイドル",
+  "artist": "YOASOBI",
+  "status": "audio_derived_candidate_done",
+  "requested_at": "2026-08-18",
+  "candidate_txt": "music_player_next/builtin_songs/偶像.txt",
+  "source": "https://www.bilibili.com/video/BV1zw411w7Dw",
+  "events": 783,
+  "beat_ms": 449,
+  "requires": "in-game audition before final",
+  "source_search": {
+    "builtin_songs": false,
+    "source_scores": false,
+    "source_audio": false,
+    "public_candidates": [
+      {
+        "url": "https://onlinesequencer.net/3431829",
+        "label": "Yoasobi - idol.mid - Online Sequencer",
+        "access": "403_cloudflare",
+        "checked_at": "2026-08-18"
+      },
+      {
+        "url": "https://www.nonstop2k.com/midi-files/20805-yoasobi-idol-midi.html",
+        "label": "YOASOBI - Idol MIDI - Nonstop2k",
+        "access": "403_cloudflare",
+        "checked_at": "2026-08-18"
+      },
+      {
+        "url": "https://www.midishow.com/en/midi/yoasobi-idol-midi-download-180882",
+        "label": "YOASOBI - アイドル (Piano) MIDI - MidiShow",
+        "access": "403_forbidden",
+        "checked_at": "2026-08-18"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=ZRtdQ81jPUQ",
+        "label": "YOASOBI「アイドル」official music video",
+        "access": "429_login_required",
+        "checked_at": "2026-08-18"
+      }
+    ]
+  },
+  "next_step": "In-game audition; check accompaniment bleed, wrong notes, and dense rhythm. Do not mark final until listening passes."
+}
