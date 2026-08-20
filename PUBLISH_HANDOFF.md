@@ -4,20 +4,20 @@
 
 ## 2026-08-20 最新曲库状态
 
-- Windows/Android 当前曲库 239 首；本轮新增14首经典候选，状态均为 `requires_in_game_audition`，尚不能标记为 final。
+- Windows/Android 当前曲库 240 首；最新加入《尘外客》中文版本候选，状态 `requires_in_game_audition`，尚不能标记为 final。
 
 - 项目：`JianpuPlayerNext`（Windows 端）
-- Windows 版本：`1.0.0-beta.40`；内置曲库 239 首；曲库版本 174
-- 当前已核验 EXE：`dist/JianpuPlayerNext-v1.0.0-beta.40.exe`，14,850,064 bytes，SHA-256 `6F0FAD6D9C52E8C53D8659E522BCBCFC14AFA0FABE3D1494A860DCDD2B6B8C4C`
-- Android 主播放器（无录制版）：`PocketMusic21-v0.1.0-239songs-no-recording-debug.apk`，10,165,002 bytes，SHA-256 `1875C3E2EB9507B0F2E220B602CE825EBC95C65C9B6B921507547E551BB55478`
-- 独立制谱器：`PocketMusic21-ScoreMaker-v0.1.0-239songs-debug.apk`，9,484,970 bytes，SHA-256 `26C72A3BC1F734E0F0BB297067C698E874049BA6A68A3284FB81699669BEF0FD`
+- Windows 版本：`1.0.0-beta.41`；内置曲库 240 首；曲库版本 175
+- 当前已核验 EXE：`dist/JianpuPlayerNext-v1.0.0-beta.41.exe`，14,850,457 bytes，SHA-256 `D15F10A339D60BAA98804912E4A8594BE3DA6814D90264DB5C127E3EC3A54C13`
+- Android 主播放器（无录制版）：`PocketMusic21-v0.1.0-240songs-no-recording-debug.apk`，10,165,073 bytes，SHA-256 `1D7CCBFF7ED8FC7F428B31D5FE69845DC68443CB4BA57C5234C9510F6FF8937C`
+- 独立制谱器：`PocketMusic21-ScoreMaker-v0.1.0-240songs-debug.apk`，9,484,970 bytes，SHA-256 `26C72A3BC1F734E0F0BB297067C698E874049BA6A68A3284FB81699669BEF0FD`
 - 本轮14首已入库；14首候选均已通过 SongParser、21键和时长门禁，仍需游戏内试听
 - 《须弥》确认为网易《一梦江湖》（原《楚留香》手游）少林门派曲，双端正式曲库均已保留；Android ID 为 `song_157`，推荐节拍 511 ms/拍
 - 第 213 首《記憶（缘之空）》推荐 627 ms/拍，来源完整、跨端与构建门禁通过，状态仍为 `requires_in_game_audition`。
 - 原 14 首热门曲批次：13 首已打包入库；《Secret Base ～君がくれたもの～》仍为 `blocked_source`，未生成或打包谱面
 - 2026-08-19 九首结构异常曲已重制并同步（含《东风破》完整 310.869 秒来源）；均标记 `requires_in_game_audition`，四首用户已试听正常的既有曲目未改动。
 - 状态：候选曲仍需游戏内试听；GitHub 尚未上传，现在不要上传 GitHub，不要创建或更新 Release
-- 上传脚本：`一键上传GitHub.ps1`；开源日发布标题和附件应以239首最新构建为准。
+- 上传脚本：`一键上传GitHub.ps1`；开源日发布标题和附件应以240首最新构建为准。
 
 ## 标准文件边界
 

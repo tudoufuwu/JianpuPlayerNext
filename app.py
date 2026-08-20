@@ -29,9 +29,9 @@ from preview_audio import LocalPreview
 
 
 APP_NAME = "21键弹琴自动化"
-APP_VERSION = "1.0.0-beta.40"
+APP_VERSION = "1.0.0-beta.41"
 HOTKEYS = [f"F{i}" for i in range(1, 13)]
-BUILTIN_LIBRARY_VERSION = 174
+BUILTIN_LIBRARY_VERSION = 175
 RECOMMENDED_BEAT_MS = {
     "嗵嗵": 493,
     "Daisy Crown（Japanese Ver.）": 757,

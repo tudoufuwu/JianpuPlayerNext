@@ -8,8 +8,8 @@
 - 应用版本：以 `app.py` 中的 `APP_VERSION` 为准。
 - Python 包版本：`pyproject.toml`，升版时必须同步。
 - 内置曲库：`builtin_songs/`。
-- 当前基线：`1.0.0-beta.40`、239 首、曲库版本 174。
-- 最新已验证程序：`dist/JianpuPlayerNext-v1.0.0-beta.40.exe`。
+- 当前基线：`1.0.0-beta.41`、240 首、曲库版本 175。
+- 最新已验证程序：`dist/JianpuPlayerNext-v1.0.0-beta.41.exe`。
 
 ## 每次新增歌曲后的门禁
 
