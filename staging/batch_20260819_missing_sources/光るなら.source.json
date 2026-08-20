@@ -1,0 +1,14 @@
+{
+  "title": "光るなら",
+  "artist": "Goose house",
+  "source_url": "https://www.midishow.com/en/midi/hikaru-nara-midi-download-223842",
+  "source_id": 223842,
+  "source_kind": "MidiShow public MIDI listing",
+  "duration_seconds": 252,
+  "tempo_bpm": 160,
+  "file_size_bytes": 119777,
+  "download_url": "https://www.midishow.com/en/midi/download?id=223842",
+  "local_midi": null,
+  "replacement_for": "https://ichigos.com/res/getfile.php?id=4673&type=midi",
+  "status": "blocked: download endpoint is Cloudflare JavaScript challenge; replacement source metadata verified"
+}

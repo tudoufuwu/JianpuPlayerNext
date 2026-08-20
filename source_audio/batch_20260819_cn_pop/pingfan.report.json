@@ -1,0 +1,19 @@
+{
+  "title": "平凡之路",
+  "artist_or_version": "治愈房车（朴树原作的公开翻唱）",
+  "source_url": "https://music.163.com/#/song?id=2147354177",
+  "source_kind": "full-length cover; original catalog stream unavailable without entitlement",
+  "source_audio": "F:\\codexai\\01\\music_player_next\\source_audio\\batch_20260819_cn_pop\\pingfan.mp3",
+  "method": "HPSS + pYIN; best-fit diatonic pitch-class set; quarter-beat slot quantization",
+  "audio_seconds": 302.119,
+  "detected_bpm": 110.294,
+  "recommended_beat_ms": 544,
+  "estimated_scale": "A major / relative minor",
+  "events": 23,
+  "rests": 14,
+  "beats": 555.5,
+  "chromatic_slots_folded": 0,
+  "txt_sha256": "91375856B1D123E95D56789F17480461D41D75B0F5EE150E2A0E6D38BC76C522",
+  "status": "audio-derived candidate; requires in-game audition",
+  "limitations": "Automatic monophonic extraction can follow accompaniment or harmony; cover sources are explicitly identified and are not represented as original masters."
+}

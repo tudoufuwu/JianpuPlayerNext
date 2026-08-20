@@ -1,0 +1,19 @@
+{
+  "title": "小幸运",
+  "artist_or_version": "田馥甄（社区镜像条目标注：田馥甄的小迷妹）",
+  "source_url": "https://music.163.com/#/song?id=3343236872",
+  "source_kind": "community mirror; exact-title full-length recording",
+  "source_audio": "F:\\codexai\\01\\music_player_next\\source_audio\\batch_20260819_cn_pop\\xiaoxingyun.mp3",
+  "method": "HPSS + pYIN; best-fit diatonic pitch-class set; quarter-beat slot quantization",
+  "audio_seconds": 263.82,
+  "detected_bpm": 78.125,
+  "recommended_beat_ms": 768,
+  "estimated_scale": "C major / relative minor",
+  "events": 153,
+  "rests": 61,
+  "beats": 343.75,
+  "chromatic_slots_folded": 8,
+  "txt_sha256": "0D841E92E0AB122F39691EFB5A1322DA38D09C3C559EEFCFB5EA49BA159D8FD9",
+  "status": "audio-derived candidate; requires in-game audition",
+  "limitations": "Automatic monophonic extraction can follow accompaniment or harmony; cover sources are explicitly identified and are not represented as original masters."
+}

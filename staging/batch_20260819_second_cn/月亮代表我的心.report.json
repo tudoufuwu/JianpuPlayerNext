@@ -1,0 +1,14 @@
+{
+  "title": "月亮代表我的心",
+  "source": "source_audio\\batch_20260819_second_cn\\月亮代表我的心.source.md",
+  "beatMs": 938,
+  "events": 41,
+  "status": "requires_in_game_audition",
+  "transcription": "manual_lead_phrase",
+  "parser_validation": "passed",
+  "artifacts": [
+    "staging\\batch_20260819_second_cn\\月亮代表我的心.candidate.txt",
+    "staging\\batch_20260819_second_cn\\月亮代表我的心.beat.json",
+    "source_audio\\batch_20260819_second_cn\\月亮代表我的心.source.md"
+  ]
+}

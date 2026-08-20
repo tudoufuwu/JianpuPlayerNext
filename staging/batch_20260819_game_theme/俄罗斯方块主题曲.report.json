@@ -1,0 +1,48 @@
+{
+  "title": "俄罗斯方块主题曲",
+  "source": "source_audio\\batch_20260819_game_theme\\korobeiniki.mid",
+  "source_license": "not_recorded; local MIDI supplied in source_audio",
+  "audio": "source_audio\\batch_20260819_game_theme\\korobeiniki.mid",
+  "beatMs": 436,
+  "events": 188,
+  "raw_notes": 463,
+  "status": "requires_in_game_audition",
+  "selected_tracks": [
+    1
+  ],
+  "track_analysis": [
+    {
+      "index": 0,
+      "name": "Greensleeves",
+      "instrument": "未标注",
+      "note_count": 0,
+      "range": "—",
+      "percussion": false,
+      "score": -1000.0
+    },
+    {
+      "index": 1,
+      "name": "Piano",
+      "instrument": "GM 0",
+      "note_count": 463,
+      "range": "A#1 – G5",
+      "percussion": false,
+      "score": 456.2
+    }
+  ],
+  "tempo_bpm": 150.0,
+  "duration_seconds": 55.516911855468756,
+  "transpose": 7,
+  "conversion": {
+    "kept_notes": 463,
+    "dropped_notes": 0,
+    "approximated_notes": 69,
+    "out_of_range_notes": 19,
+    "chord_count": 132
+  },
+  "parser_validation": "passed",
+  "artifacts": [
+    "staging\\batch_20260819_game_theme\\俄罗斯方块主题曲.candidate.txt",
+    "staging\\batch_20260819_game_theme\\俄罗斯方块主题曲.beat.json"
+  ]
+}

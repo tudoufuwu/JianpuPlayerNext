@@ -1,0 +1,19 @@
+{
+  "title": "追光者",
+  "artist_or_version": "岑宁儿",
+  "source_url": "https://music.163.com/#/song?id=1392908905",
+  "source_kind": "NetEase duplicate catalog entry credited to original artist",
+  "source_audio": "F:\\codexai\\01\\music_player_next\\source_audio\\batch_20260819_cn_pop\\zhuiguang.mp3",
+  "method": "HPSS + pYIN; best-fit diatonic pitch-class set; quarter-beat slot quantization",
+  "audio_seconds": 235.833,
+  "detected_bpm": 72.115,
+  "recommended_beat_ms": 832,
+  "estimated_scale": "B major / relative minor",
+  "events": 110,
+  "rests": 41,
+  "beats": 283.5,
+  "chromatic_slots_folded": 24,
+  "txt_sha256": "3E76BB959DCA36DAC7526BCF3C9F21CBE8475368B3BC6CE5F39D7FECFE6679C7",
+  "status": "audio-derived candidate; requires in-game audition",
+  "limitations": "Automatic monophonic extraction can follow accompaniment or harmony; cover sources are explicitly identified and are not represented as original masters."
+}

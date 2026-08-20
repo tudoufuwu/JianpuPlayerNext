@@ -1,0 +1,76 @@
+{
+  "title": "光るなら",
+  "artist": "Goose house",
+  "audio": "source_audio/batch_20260819_anime_repair/光るなら_ichigos_4673_repaired.mid",
+  "source": "Ichigo's Sheet Music",
+  "source_url": "https://ichigos.com/res/getfile.php?id=4673&type=midi&token=7a2d0afbafcc27a8eacf32e6dfbea451",
+  "original_midi": "source_audio/batch_20260819_anime/光るなら_ichigos_4673.mid",
+  "repair": {
+    "kind": "structural_byte_repair",
+    "removed_offsets_hex": [
+      "0x344",
+      "0x38e",
+      "0x40e",
+      "0x458",
+      "0x4c6",
+      "0x522",
+      "0x618",
+      "0x66b",
+      "0x67f",
+      "0x7aa",
+      "0x80f",
+      "0x81a",
+      "0x876",
+      "0x8db",
+      "0x8e6",
+      "0x8f1",
+      "0x95f",
+      "0x985"
+    ],
+    "removed_bytes": 18,
+    "reason": "Each listed zero byte preceded an explicit status byte (0x80/0x90/0xb0), causing strict MIDI parsers to treat the status as a data byte. Removing only these malformed separator bytes preserves all note/status bytes and makes the original track parseable."
+  },
+  "beatMs": 375,
+  "events": 259,
+  "raw_notes": 259,
+  "status": "requires_in_game_audition",
+  "selected_tracks": [
+    1
+  ],
+  "track_analysis": [
+    {
+      "index": 0,
+      "name": "±êÌâ",
+      "instrument": "未标注",
+      "note_count": 0,
+      "range": "—",
+      "percussion": false,
+      "score": -1000.0
+    },
+    {
+      "index": 1,
+      "name": "Track 1",
+      "instrument": "GM 73",
+      "note_count": 259,
+      "range": "G#4 – A6",
+      "percussion": false,
+      "score": 285.4
+    }
+  ],
+  "tempo_bpm": 160.0,
+  "duration_seconds": 92.23750000000001,
+  "transpose": -9,
+  "conversion": {
+    "kept_notes": 259,
+    "dropped_notes": 0,
+    "approximated_notes": 3,
+    "out_of_range_notes": 1,
+    "chord_count": 0
+  },
+  "parser_validation": "passed",
+  "artifacts": [
+    "staging/batch_20260819_anime_repair/光るなら.candidate.txt",
+    "staging/batch_20260819_anime_repair/光るなら.beat.json",
+    "staging/batch_20260819_anime_repair/光るなら.report.json"
+  ]
+}

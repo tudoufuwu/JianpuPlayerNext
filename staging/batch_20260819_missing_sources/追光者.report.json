@@ -1,0 +1,13 @@
+{
+  "title": "追光者",
+  "artist": "岑宁儿",
+  "source": "https://www.bilibili.com/video/BV12Y411A7Au",
+  "audio": "music_player_next\\source_audio\\batch_20260819_missing_sources\\追光者.mp3",
+  "audio_seconds": 235.833,
+  "beatMs": 714,
+  "events": 228,
+  "rests": 81,
+  "sha256": "273BD24A826F952A16FB3F60A32CEBD9457889579E7C55BAA62089264250EF90",
+  "parser_validation": "passed",
+  "status": "candidate_done_requires_listening"
+}

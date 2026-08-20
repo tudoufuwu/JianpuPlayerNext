@@ -1,0 +1,46 @@
+{
+  "title": "天空之城（君をのせて）",
+  "audio": "source_audio\\batch_20260819_anime\\天空之城_ichigos_743.mid",
+  "beatMs": 625,
+  "events": 751,
+  "raw_notes": 1044,
+  "status": "requires_in_game_audition",
+  "selected_tracks": [
+    1
+  ],
+  "track_analysis": [
+    {
+      "index": 0,
+      "name": "音轨 1",
+      "instrument": "未标注",
+      "note_count": 0,
+      "range": "—",
+      "percussion": false,
+      "score": -1000.0
+    },
+    {
+      "index": 1,
+      "name": "Acoustic Grand Piano",
+      "instrument": "GM 0",
+      "note_count": 1044,
+      "range": "B1 – A#6",
+      "percussion": false,
+      "score": 564.4
+    }
+  ],
+  "tempo_bpm": 96.0,
+  "duration_seconds": 255.0,
+  "transpose": 4,
+  "conversion": {
+    "kept_notes": 1044,
+    "dropped_notes": 0,
+    "approximated_notes": 373,
+    "out_of_range_notes": 202,
+    "chord_count": 226
+  },
+  "parser_validation": "passed",
+  "artifacts": [
+    "staging\\batch_20260819_anime\\天空之城（君をのせて）.candidate.txt",
+    "staging\\batch_20260819_anime\\天空之城（君をのせて）.beat.json"
+  ]
+}

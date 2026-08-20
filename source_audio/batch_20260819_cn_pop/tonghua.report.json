@@ -1,0 +1,19 @@
+{
+  "title": "童话",
+  "artist_or_version": "光良",
+  "source_url": "https://music.163.com/#/song?id=1954748375",
+  "source_kind": "NetEase duplicate catalog entry credited to original artist",
+  "source_audio": "F:\\codexai\\01\\music_player_next\\source_audio\\batch_20260819_cn_pop\\tonghua.mp3",
+  "method": "HPSS + pYIN; best-fit diatonic pitch-class set; quarter-beat slot quantization",
+  "audio_seconds": 241.648,
+  "detected_bpm": 66.964,
+  "recommended_beat_ms": 896,
+  "estimated_scale": "F# major / relative minor",
+  "events": 102,
+  "rests": 43,
+  "beats": 269.75,
+  "chromatic_slots_folded": 3,
+  "txt_sha256": "E6D0A8E1E90FFFD726756560C5F16F69E279594B89C297F44C472D8DDD3A79DE",
+  "status": "audio-derived candidate; requires in-game audition",
+  "limitations": "Automatic monophonic extraction can follow accompaniment or harmony; cover sources are explicitly identified and are not represented as original masters."
+}

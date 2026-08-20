@@ -1,0 +1,56 @@
+{
+  "title": "残酷天使的行动纲领",
+  "artist": "高橋洋子",
+  "audio": "source_audio/batch_20260819_anime_repair/残酷天使的行动纲领_ichigos_4337_verified.mid",
+  "source": "Ichigo's Sheet Music",
+  "source_url": "https://ichigos.com/res/getfile.php?id=4337&type=midi&token=6c871a4a5d9962da0b58968d1c034ba4",
+  "original_midi": "source_audio/batch_20260819_anime/残酷天使的行动纲领_ichigos_4337.mid",
+  "repair": {
+    "kind": "byte_identical_local_verification_copy",
+    "removed_bytes": 0,
+    "reason": "The existing Ichigo's MIDI is parser-valid; the verified copy is isolated in this repair batch without changing musical bytes."
+  },
+  "beatMs": 525,
+  "events": 243,
+  "raw_notes": 363,
+  "status": "requires_in_game_audition",
+  "selected_tracks": [
+    0
+  ],
+  "track_analysis": [
+    {
+      "index": 0,
+      "name": "音轨 1",
+      "instrument": "GM 0",
+      "note_count": 363,
+      "range": "G3 – C5",
+      "percussion": false,
+      "score": 375.0
+    },
+    {
+      "index": 1,
+      "name": "音轨 2",
+      "instrument": "未标注",
+      "note_count": 323,
+      "range": "A#1 – A#3",
+      "percussion": false,
+      "score": 323.0
+    }
+  ],
+  "tempo_bpm": 95.99984640024576,
+  "duration_seconds": 93.468786,
+  "transpose": -3,
+  "conversion": {
+    "kept_notes": 363,
+    "dropped_notes": 0,
+    "approximated_notes": 5,
+    "out_of_range_notes": 0,
+    "chord_count": 88
+  },
+  "parser_validation": "passed",
+  "artifacts": [
+    "staging/batch_20260819_anime_repair/残酷天使的行动纲领.candidate.txt",
+    "staging/batch_20260819_anime_repair/残酷天使的行动纲领.beat.json",
+    "staging/batch_20260819_anime_repair/残酷天使的行动纲领.report.json"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "title": "secret base 〜君がくれたもの〜",
+  "artist": "ZONE",
+  "source_url": "https://www.nonstop2k.com/midi-files/16272-zone-secret-base-midi.html",
+  "download_url": "https://www.nonstop2k.com/midi-files/get_file.php?user_id=1&nid=2c449cca94b73021c82351188fba485816272",
+  "source_kind": "public MIDI listing (metadata visible; free-download endpoint)",
+  "metadata": {"duration_seconds": 316, "tempo_bpm": 145, "key": "F-Sharp Major"},
+  "local_midi": null,
+  "status": "blocked_source",
+  "retrieval_attempts": [
+    {"method": "Invoke-WebRequest", "url": "https://www.nonstop2k.com/midi-files/16272-zone-secret-base-midi.html", "result": "HTTP 403"},
+    {"method": "Invoke-WebRequest", "url": "https://www.nonstop2k.com/midi-files/get_file.php?user_id=1&nid=2c449cca94b73021c82351188fba485816272", "result": "Cloudflare JavaScript challenge / no MIDI bytes"}
+  ],
+  "parser_validation": "not_run: no MIDI file was obtained",
+  "integrity": "No melody or 21-key TXT was guessed or synthesized without a verifiable source."
+}

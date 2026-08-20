@@ -1,0 +1,13 @@
+{
+  "title": "勇气",
+  "artist": "梁静茹",
+  "source": "https://www.bilibili.com/video/BV19y4y117P6",
+  "audio": "music_player_next\\staging\\batch_20260819_sources\\勇气\\source.wav",
+  "audio_seconds": 358.528,
+  "beatMs": 938,
+  "events": 297,
+  "rests": 117,
+  "sha256": "A20883E173B8965147DD2A4161805AD6400D060C47E60B798076DA1BD485B48C",
+  "parser_validation": "passed",
+  "status": "candidate_done_requires_listening"
+}

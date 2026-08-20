@@ -1,0 +1,6 @@
+{
+  "title": "遇见",
+  "status": "blocked",
+  "blocker": "No source audio, source note, MIDI, or transcription data supplied.",
+  "missing": ["candidate.txt", "source.md", "beat.json", "parser_validation"]
+}

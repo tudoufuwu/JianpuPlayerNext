@@ -1,0 +1,25 @@
+{
+  "batch": "batch_20260819_anime_repair",
+  "retrieved_at": "2026-08-19",
+  "source_site": "Ichigo's Sheet Music",
+  "source_license": "NON-COMMERCIAL USE ONLY",
+  "license_url": "https://ichigos.com/legal",
+  "sources": [
+    {
+      "title": "光るなら",
+      "artist": "Goose house",
+      "source_url": "https://ichigos.com/res/getfile.php?id=4673&type=midi&token=7a2d0afbafcc27a8eacf32e6dfbea451",
+      "original_file": "source_audio/batch_20260819_anime/光るなら_ichigos_4673.mid",
+      "file": "光るなら_ichigos_4673_repaired.mid",
+      "repair": "Removed 18 malformed zero-byte separators at offsets 0x344, 0x38e, 0x40e, 0x458, 0x4c6, 0x522, 0x618, 0x66b, 0x67f, 0x7aa, 0x80f, 0x81a, 0x876, 0x8db, 0x8e6, 0x8f1, 0x95f, 0x985; second MTrk length adjusted from 2546 to 2528. No note/status bytes were invented."
+    },
+    {
+      "title": "残酷天使的行动纲领",
+      "artist": "高橋洋子",
+      "source_url": "https://ichigos.com/res/getfile.php?id=4337&type=midi&token=6c871a4a5d9962da0b58968d1c034ba4",
+      "original_file": "source_audio/batch_20260819_anime/残酷天使的行动纲领_ichigos_4337.mid",
+      "file": "残酷天使的行动纲领_ichigos_4337_verified.mid",
+      "repair": "Byte-identical verification copy; original MIDI passed mido and project analysis."
+    }
+  ]
+}

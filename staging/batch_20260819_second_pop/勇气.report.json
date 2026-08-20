@@ -1,0 +1,6 @@
+{
+  "title": "勇气",
+  "status": "blocked",
+  "blocker": "No source audio, source note, or transcription data supplied; cannot fabricate candidate.",
+  "missing": ["candidate.txt", "source.md", "beat.json", "parser_validation"]
+}

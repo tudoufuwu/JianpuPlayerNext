@@ -1,0 +1,19 @@
+{
+  "title": "夜空中最亮的星",
+  "artist_or_version": "陈自言（逃跑计划原作的公开翻唱）",
+  "source_url": "https://music.163.com/#/song?id=2141396848",
+  "source_kind": "full-length cover; original catalog stream unavailable without entitlement",
+  "source_audio": "F:\\codexai\\01\\music_player_next\\source_audio\\batch_20260819_cn_pop\\yekong.mp3",
+  "method": "HPSS + pYIN; best-fit diatonic pitch-class set; quarter-beat slot quantization",
+  "audio_seconds": 252.401,
+  "detected_bpm": 110.294,
+  "recommended_beat_ms": 544,
+  "estimated_scale": "F major / relative minor",
+  "events": 422,
+  "rests": 177,
+  "beats": 464.0,
+  "chromatic_slots_folded": 22,
+  "txt_sha256": "B3B623ED152A6B0FA585213A611D207F20F47AE3BE1FD165C4267E61EC9E8782",
+  "status": "audio-derived candidate; requires in-game audition",
+  "limitations": "Automatic monophonic extraction can follow accompaniment or harmony; cover sources are explicitly identified and are not represented as original masters."
+}

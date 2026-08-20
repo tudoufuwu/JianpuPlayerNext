@@ -1,0 +1,46 @@
+{
+  "title": "Summer",
+  "audio": "source_audio\\batch_20260819_anime\\Summer_ichigos_4645.mid",
+  "beatMs": 701,
+  "events": 830,
+  "raw_notes": 1112,
+  "status": "requires_in_game_audition",
+  "selected_tracks": [
+    0
+  ],
+  "track_analysis": [
+    {
+      "index": 0,
+      "name": "音轨 1",
+      "instrument": "GM 0",
+      "note_count": 1112,
+      "range": "F#3 – F#6",
+      "percussion": false,
+      "score": 620.0
+    },
+    {
+      "index": 1,
+      "name": "音轨 2",
+      "instrument": "未标注",
+      "note_count": 800,
+      "range": "B1 – A4",
+      "percussion": false,
+      "score": 601.6
+    }
+  ],
+  "tempo_bpm": 88.88888888888889,
+  "duration_seconds": 363.00208850416664,
+  "transpose": -9,
+  "conversion": {
+    "kept_notes": 1112,
+    "dropped_notes": 0,
+    "approximated_notes": 33,
+    "out_of_range_notes": 6,
+    "chord_count": 211
+  },
+  "parser_validation": "passed",
+  "artifacts": [
+    "staging\\batch_20260819_anime\\Summer.candidate.txt",
+    "staging\\batch_20260819_anime\\Summer.beat.json"
+  ]
+}

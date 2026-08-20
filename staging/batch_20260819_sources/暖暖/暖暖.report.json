@@ -1,0 +1,13 @@
+{
+  "title": "暖暖",
+  "artist": "梁静茹",
+  "source": "https://www.bilibili.com/video/BV15x4y1s79w",
+  "audio": "music_player_next\\staging\\batch_20260819_sources\\暖暖\\source.wav",
+  "audio_seconds": 242.56,
+  "beatMs": 833,
+  "events": 259,
+  "rests": 110,
+  "sha256": "F6F82978ABB1C66AFC30EE7CD4886AEE55F0CBE6E2168A784FF10F7185F3BC11",
+  "parser_validation": "passed",
+  "status": "candidate_done_requires_listening"
+}

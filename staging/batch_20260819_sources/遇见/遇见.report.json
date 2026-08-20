@@ -1,0 +1,13 @@
+{
+  "title": "遇见",
+  "artist": "孙燕姿",
+  "source": "https://www.bilibili.com/video/BV1t24y1G7PD",
+  "audio": "music_player_next\\staging\\batch_20260819_sources\\遇见\\source.wav",
+  "audio_seconds": 211.413,
+  "beatMs": 714,
+  "events": 380,
+  "rests": 147,
+  "sha256": "C2AA5EDDB52D2760FD631A25F9B8454219F7F35E2E3D48C481880363185B9A49",
+  "parser_validation": "passed",
+  "status": "candidate_done_requires_listening"
+}

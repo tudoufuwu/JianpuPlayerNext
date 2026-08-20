@@ -1,0 +1,14 @@
+{
+  "title": "如愿",
+  "source": "source_audio\\batch_20260819_second_cn\\如愿.source.md",
+  "beatMs": 833,
+  "events": 38,
+  "status": "requires_in_game_audition",
+  "transcription": "manual_lead_phrase",
+  "parser_validation": "passed",
+  "artifacts": [
+    "staging\\batch_20260819_second_cn\\如愿.candidate.txt",
+    "staging\\batch_20260819_second_cn\\如愿.beat.json",
+    "source_audio\\batch_20260819_second_cn\\如愿.source.md"
+  ]
+}

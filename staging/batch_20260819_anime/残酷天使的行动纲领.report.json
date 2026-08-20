@@ -1,0 +1,22 @@
+{
+  "title": "残酷天使的行动纲领",
+  "audio": "source_audio\\batch_20260819_anime\\残酷天使的行动纲领_ichigos_4337.mid",
+  "beatMs": 525,
+  "events": 243,
+  "raw_notes": 363,
+  "status": "requires_in_game_audition",
+  "selected_tracks": [
+    0
+  ],
+  "tempo_bpm": 95.99984640024576,
+  "duration_seconds": 93.468786,
+  "transpose": -3,
+  "conversion": {
+    "kept_notes": 363,
+    "dropped_notes": 0,
+    "approximated_notes": 5,
+    "out_of_range_notes": 0,
+    "chord_count": 88
+  },
+  "parser_validation": "passed"
+}

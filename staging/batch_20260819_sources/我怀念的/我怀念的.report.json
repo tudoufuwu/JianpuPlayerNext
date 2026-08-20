@@ -1,0 +1,13 @@
+{
+  "title": "我怀念的",
+  "artist": "孙燕姿",
+  "source": "https://www.bilibili.com/video/BV1ZM411B7YM",
+  "audio": "music_player_next\\staging\\batch_20260819_sources\\我怀念的\\source.wav",
+  "audio_seconds": 294.699,
+  "beatMs": 896,
+  "events": 336,
+  "rests": 123,
+  "sha256": "4D4B7EAC2BC9A6E3E654C3413C6A784C546881F787FBFFEC98A5B93B57D1C8A2",
+  "parser_validation": "passed",
+  "status": "candidate_done_requires_listening"
+}

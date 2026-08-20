@@ -1,0 +1,44 @@
+{
+  "source_site": "Ichigo's Sheet Music",
+  "source_index": "https://ichigos.com/sheets",
+  "source_license": "NON-COMMERCIAL USE ONLY",
+  "license_url": "https://ichigos.com/legal",
+  "retrieved_at": "2026-08-19",
+  "sources": [
+    {
+      "title": "天空之城（君をのせて）",
+      "arrangement": "Castle in the Sky, Laputa; for Piano",
+      "index_url": "https://ichigos.com/sheets/l",
+      "midi_url": "https://ichigos.com/res/getfile.php?id=743&type=midi&token=a80c49e34cbf3a1eb1dab16597789c02",
+      "file": "天空之城_ichigos_743.mid"
+    },
+    {
+      "title": "Summer",
+      "arrangement": "Summer (full version); for Piano; transcribed by illinattta",
+      "index_url": "https://ichigos.com/sheets/k",
+      "midi_url": "https://ichigos.com/res/getfile.php?id=4645&type=midi&token=13f3ecd206c16237a08f8bcb26bce977",
+      "file": "Summer_ichigos_4645.mid"
+    },
+    {
+      "title": "青鸟",
+      "arrangement": "Blue Bird; piano; transcribed by cis300",
+      "index_url": "https://ichigos.com/sheets/n",
+      "midi_url": "https://ichigos.com/res/getfile.php?id=2190&type=midi&token=7b7bd53ba5107cf5fb2c2a51dd887c95",
+      "file": "青鸟_ichigos_2190.mid"
+    },
+    {
+      "title": "光るなら",
+      "arrangement": "Hikaru Nara; for Flute; transcribed by Deikastiel Ulloa",
+      "index_url": "https://ichigos.com/sheets/s",
+      "midi_url": "https://ichigos.com/res/getfile.php?id=4673&type=midi&token=7a2d0afbafcc27a8eacf32e6dfbea451",
+      "file": "光るなら_ichigos_4673.mid"
+    },
+    {
+      "title": "残酷天使的行动纲领",
+      "arrangement": "A Cruel Angel's Thesis; for Piano; transcribed by Radical Edward",
+      "index_url": "https://ichigos.com/sheets/e",
+      "midi_url": "https://ichigos.com/res/getfile.php?id=4337&type=midi&token=6c871a4a5d9962da0b58968d1c034ba4",
+      "file": "残酷天使的行动纲领_ichigos_4337.mid"
+    }
+  ]
+}

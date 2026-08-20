@@ -1,5 +1,7 @@
 # GitHub 发布说明
 
+> **当前发布门禁：不要上传。** 本地测试基线为 Windows `1.0.0-beta.37` / 208 首，Android 测试 APK 命名为 `PocketMusic21-v0.1.0-mvp-208songs-recording-fix-debug.apk`。原 14 首批次中只有 13 首已打包，《Secret Base ～君がくれたもの～》仍为 `blocked_source`；候选曲仍需游戏内试听。以下命令只能在维护者明确解除门禁后使用。
+
 ## 仓库内容
 
 `music_player_next/` 本身就是仓库根目录，包含 README、LICENSE、变更记录、
