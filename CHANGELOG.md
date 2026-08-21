@@ -1,5 +1,21 @@
 # 更新记录
 
+## 1.0.0-beta.44 - 2026-08-20
+
+- 完成本批 8 首：如愿、美丽的神话、月亮代表我的心、至少还有你、半岛铁盒、菊花台、Secret Base ～君がくれたもの～（10 years after ver.）、踏山河。
+- 8 首均来自完整可复核音频，Parser、21 键范围与时长覆盖通过；统一保留 `requires_in_game_audition`，未标记 final。
+- Windows/Android 曲库从 246 首同步至 254 首，曲库版本 182；GitHub 未上传。
+
+## 1.0.0-beta.43 - 2026-08-20
+
+- 爆种批次新增《修炼爱情》《可惜没如果》《Megalovania》三首完整 B 站音频转写候选；推荐 500 ms/拍，Parser/21键/时长覆盖门禁通过。
+- 三首保留 `requires_in_game_audition`，尚未人工定稿；Windows/Android 曲库同步至 246 首，曲库版本 181。
+
+## 1.0.0-beta.42 - 2026-08-20
+
+- 新增《轨迹》《江南》《枫》三首完整 B 站音频转写候选；推荐 500 ms/拍，Parser round-trip 和全曲时长覆盖通过。
+- 三首均保留 `requires_in_game_audition`，尚未声称人工定稿；Windows/Android 曲库同步至 243 首，曲库版本 178。
+
 ## 1.0.0-beta.41 - 2026-08-20
 
 - 根据鸣潮先行公约官方视频 `BV1G48g68Ej1` 的 p1 中文完整音频制作《尘外客》候选并加入双端曲库；推荐 441 ms/拍，状态为 `requires_in_game_audition`。

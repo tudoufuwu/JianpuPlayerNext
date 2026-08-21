@@ -29,9 +29,9 @@ from preview_audio import LocalPreview
 
 
 APP_NAME = "21键弹琴自动化"
-APP_VERSION = "1.0.0-beta.41"
+APP_VERSION = "1.0.0-beta.45"
 HOTKEYS = [f"F{i}" for i in range(1, 13)]
-BUILTIN_LIBRARY_VERSION = 175
+BUILTIN_LIBRARY_VERSION = 183
 RECOMMENDED_BEAT_MS = {
     "嗵嗵": 493,
     "Daisy Crown（Japanese Ver.）": 757,
@@ -241,6 +241,18 @@ RECOMMENDED_BEAT_MS = {
     "左手指月": 650,
     "无羁": 750,
     "归去来兮": 857,
+    "轨迹": 500,
+    "江南": 500,
+    "枫": 500,
+    "修炼爱情": 500,
+    "可惜没如果": 500,
+    "Megalovania": 500,
+    "红豆": 500,
+    "匆匆那年": 500,
+    "素颜": 500,
+    "一直很安静": 500,
+    "传奇": 500,
+    "千年之恋": 827,
 }
 
 

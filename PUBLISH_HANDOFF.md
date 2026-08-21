@@ -1,15 +1,29 @@
 # GitHub 发布交接（下回合从这里继续）
 
+## 当前本地曲库（2026-08-21）
+
+- Windows/Android 当前曲库为263首；新增 `song_258`–`song_263`：红豆、匆匆那年、素颜、一直很安静、传奇、千年之恋。
+- 六首均为 `requires_in_game_audition` 自动候选，未完成游戏内试听，不能称为 final。
+- GitHub 未上传，未创建 Release；263首包需完成本轮构建门禁后再记录附件哈希。
+- Windows 263首候选构建：`dist/JianpuPlayerNext-v1.0.0-beta.45.exe`，14,923,368 bytes，SHA-256 `3A388142A1AEBFB3F151121486050FB1CBEACB39759BDD81C9CAE2B90DDF9E14`。
+
+## 2026-08-20 爆种 OLD-HITS04（暂不上传）
+
+- 当前 Windows/Android 曲库为 255 首；新增《一生所爱》`song_255`，仍需游戏内试听，未标 final。
+- 《泡沫》《我们的爱》《God knows...》来源阻塞，未入正式曲库。
+- Android 255 首 APK 与跨端门禁结果记录在 `mobile_player_android/PUBLISH_HANDOFF.md`；GitHub 未上传。
+- Windows 当前构建：`dist/JianpuPlayerNext-v1.0.0-beta.44.exe`，14,897,765 bytes，SHA-256 `46FE95A80E05614268149AC92BD1414377DA5A696EAC0255F3D723513841946D`。
+
 ## 当前发布状态
 
 ## 2026-08-20 最新曲库状态
 
-- Windows/Android 当前曲库 240 首；最新加入《尘外客》中文版本候选，状态 `requires_in_game_audition`，尚不能标记为 final。
+- Windows/Android 当前曲库 254 首；本轮新增 8 首候选，状态 `requires_in_game_audition`，尚不能标记为 final。
 
 - 项目：`JianpuPlayerNext`（Windows 端）
-- Windows 版本：`1.0.0-beta.41`；内置曲库 240 首；曲库版本 175
-- 当前已核验 EXE：`dist/JianpuPlayerNext-v1.0.0-beta.41.exe`，14,850,457 bytes，SHA-256 `D15F10A339D60BAA98804912E4A8594BE3DA6814D90264DB5C127E3EC3A54C13`
-- Android 主播放器（无录制版）：`PocketMusic21-v0.1.0-240songs-no-recording-debug.apk`，10,165,073 bytes，SHA-256 `1D7CCBFF7ED8FC7F428B31D5FE69845DC68443CB4BA57C5234C9510F6FF8937C`
+- Windows 版本：`1.0.0-beta.44`；内置曲库 254 首；曲库版本 182
+- 当前已核验 EXE：`dist/JianpuPlayerNext-v1.0.0-beta.44.exe`，14,894,042 bytes，SHA-256 `3633446460756F02721F4B12EF0E4A1B8B4833E4137574B50AF1CB956597B513`
+- Android 主播放器（无录制版）：`PocketMusic21-v0.1.0-254songs-no-recording-debug.apk`，10,166,067 bytes，SHA-256 `DA1F07246EFBB3FB1CA73806D3FC9C34363D8E7A3E3E06351B0BCDE7357F3985`
 - 独立制谱器：`PocketMusic21-ScoreMaker-v0.1.0-240songs-debug.apk`，9,484,970 bytes，SHA-256 `26C72A3BC1F734E0F0BB297067C698E874049BA6A68A3284FB81699669BEF0FD`
 - 本轮14首已入库；14首候选均已通过 SongParser、21键和时长门禁，仍需游戏内试听
 - 《须弥》确认为网易《一梦江湖》（原《楚留香》手游）少林门派曲，双端正式曲库均已保留；Android ID 为 `song_157`，推荐节拍 511 ms/拍
@@ -17,7 +31,7 @@
 - 原 14 首热门曲批次：13 首已打包入库；《Secret Base ～君がくれたもの～》仍为 `blocked_source`，未生成或打包谱面
 - 2026-08-19 九首结构异常曲已重制并同步（含《东风破》完整 310.869 秒来源）；均标记 `requires_in_game_audition`，四首用户已试听正常的既有曲目未改动。
 - 状态：候选曲仍需游戏内试听；GitHub 尚未上传，现在不要上传 GitHub，不要创建或更新 Release
-- 上传脚本：`一键上传GitHub.ps1`；开源日发布标题和附件应以240首最新构建为准。
+- 上传脚本：`一键上传GitHub.ps1`；开源日发布标题和附件应以254首最新构建为准。
 
 ## 标准文件边界
 

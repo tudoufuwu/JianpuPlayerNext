@@ -25,7 +25,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name="JianpuPlayerNext-v1.0.0-beta.41",
+    name="JianpuPlayerNext-v1.0.0-beta.45",
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

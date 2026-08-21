@@ -2,13 +2,13 @@
 
 对外名称：21键弹琴自动化（Windows 双端曲库）。这是一个面向 Windows 21 键游戏乐器的本地曲库、MIDI 转换与后台演奏工具；新版位于独立目录，和旧版播放器的数据、配置与程序互不覆盖。
 
-当前本地测试发布元数据：Windows `1.0.0-beta.41`，内置曲库版本 `175`（240 首）。Android 对应的主播放器为无录制版；最新加入《尘外客》中文版本候选，仍需游戏内试听，**现在不要上传 GitHub 或创建 Release**。
+当前本地测试发布元数据：Windows `1.0.0-beta.45`，内置曲库版本 `183`（263 首）。Android 对应的主播放器为无录制版；新增候选仍需游戏内试听，**现在不要上传 GitHub 或创建 Release**。
 
 原 14 首热门曲批次中，13 首已打包入库，但都仍是 `requires_in_game_audition` 候选；《Secret Base ～君がくれたもの～》仍为 `blocked_source`，没有生成或打包伪造谱面。
 
 ## 主要功能
 
-- 内置 240 首 TXT 曲谱，可搜索、收藏、打标签并维护播放历史。
+- 内置 263 首 TXT 曲谱，可搜索、收藏、打标签并维护播放历史。
 - 导入标准 MIDI，自动分析音轨并推荐主旋律。
 - 将 MIDI 映射到 21 个白键，支持自动移调、黑键取最近白键或丢弃、1/4～1/16 量化。
 - 转换结果可在本机试听 30 秒、保存为 TXT，并立即加入曲库。
@@ -54,7 +54,7 @@ python -m unittest discover -s tests -p "test_*.py" -v
 
 打包结果位于 `dist\JianpuPlayerNext-*.exe`。推送 `v*` 标签时，GitHub Actions 也会构建 Windows 发布文件并附加到 Release。
 
-发布方法见 [PUBLISHING.md](PUBLISHING.md)，但当前 240 首测试发布必须先完成游戏内试听并由维护者解除发布门禁；现在不要上传。其他 AI 或维护者接手前请先读 [AGENTS.md](AGENTS.md) 与 [PROJECT_STATE.md](PROJECT_STATE.md)。
+发布方法见 [PUBLISHING.md](PUBLISHING.md)，但当前 254 首测试发布必须先完成游戏内试听并由维护者解除发布门禁；现在不要上传。其他 AI 或维护者接手前请先读 [AGENTS.md](AGENTS.md) 与 [PROJECT_STATE.md](PROJECT_STATE.md)。
 
 ## 项目结构
 
