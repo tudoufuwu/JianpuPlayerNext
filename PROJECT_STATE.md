@@ -4,13 +4,13 @@
 
 | 项目 | 当前值 |
 |---|---|
-| 应用版本 | `1.0.0-beta.45` |
-| 内置歌曲 | 263 首 |
-| 曲库版本 | 183 |
+| 应用版本 | `1.0.0-beta.47` |
+| 内置歌曲 | 267 首 |
+| 曲库版本 | 184 |
 | 自动测试 | 26/26 PASS |
-| Windows 当前已核验产物 | `dist/JianpuPlayerNext-v1.0.0-beta.45.exe` |
-| Windows 产物大小 | 14,923,368 bytes |
-| Windows SHA-256 | `3A388142A1AEBFB3F151121486050FB1CBEACB39759BDD81C9CAE2B90DDF9E14` |
+| Windows 当前已核验产物 | `dist/JianpuPlayerNext-v1.0.0-beta.46.exe` |
+| Windows 产物大小 | 14,924,412 bytes |
+| Windows SHA-256 | `8FA86100D6C3FBB08A9D82FA8E577574346DE1FA582029BF95514DE0586416DE` |
 | GitHub 状态 | 未上传；当前禁止创建或更新 Release |
 
 本批新增14首经典候选：《普通DISCO》《达拉崩吧》《勾指起誓》《权御天下》《冠世一战》《神的随波逐流》《LOSER》《撒野》《unravel》《万神纪》《光年之外》《演员》《追梦赤子心》《世间美好与你环环相扣》，均已进入 Windows/Android 曲库，但状态仍为 `requires_in_game_audition`，不得描述为 final。

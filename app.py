@@ -29,9 +29,12 @@ from preview_audio import LocalPreview
 
 
 APP_NAME = "21键弹琴自动化"
-APP_VERSION = "1.0.0-beta.45"
+APP_VERSION = "1.0.0-beta.47"
 HOTKEYS = [f"F{i}" for i in range(1, 13)]
-BUILTIN_LIBRARY_VERSION = 183
+BUILTIN_LIBRARY_VERSION = 185
+PLAYBACK_RATE_MIN = 0.25
+PLAYBACK_RATE_MAX = 4.0
+PLAYBACK_RATE_PRESETS = ("0.50x", "0.75x", "1.00x", "1.25x", "1.50x", "2.00x", "3.00x", "4.00x")
 RECOMMENDED_BEAT_MS = {
     "嗵嗵": 493,
     "Daisy Crown（Japanese Ver.）": 757,
@@ -253,12 +256,24 @@ RECOMMENDED_BEAT_MS = {
     "一直很安静": 500,
     "传奇": 500,
     "千年之恋": 827,
+    "夏空的歌（短原版）": 535,
 }
 
 
 def recommended_beat_ms(song_name: str) -> int | None:
     """Return the calibrated playback speed for a built-in song, if known."""
     return RECOMMENDED_BEAT_MS.get(song_name)
+
+
+def normalize_playback_rate(value: object) -> float:
+    text = str(value).strip().lower().removesuffix("x")
+    try:
+        rate = float(text)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("播放倍率必须是数字，例如 0.83 或 1.25。") from exc
+    if not PLAYBACK_RATE_MIN <= rate <= PLAYBACK_RATE_MAX:
+        raise ValueError("播放倍率范围是 0.25x 到 4.00x。")
+    return round(rate, 2)
 
 
 def filter_song_names(names: list[str], query: str) -> list[str]:
@@ -436,6 +451,7 @@ class JianpuPlayerApp(tk.Tk):
         self.tags_var = tk.StringVar()
         self.song_meta_var = tk.StringVar(value="尚未选择歌曲")
         self.beat_var = tk.StringVar(value=str(self.config_data.get("beat_ms", 700)))
+        self.playback_rate_var = tk.StringVar(value=f"{float(self.config_data.get('playback_rate', 1.0)):.2f}x")
         self.countdown_var = tk.StringVar(value=str(self.config_data.get("countdown", 2)))
         self.sequence_enabled_var = tk.BooleanVar(value=self.config_data.get("sequence_enabled", False))
         self.repeat_one_var = tk.BooleanVar(value=self.config_data.get("repeat_one", False))
@@ -547,6 +563,7 @@ class JianpuPlayerApp(tk.Tk):
         self.data_dir.mkdir(parents=True, exist_ok=True)
         payload = {
             "beat_ms": int(float(self.beat_var.get() or 700)),
+            "playback_rate": normalize_playback_rate(self.playback_rate_var.get()),
             "countdown": int(float(self.countdown_var.get() or 0)),
             "sequence_enabled": self.sequence_enabled_var.get(),
             "repeat_one": self.repeat_one_var.get(),
@@ -830,6 +847,7 @@ class JianpuPlayerApp(tk.Tk):
         for var in (self.record_start_key_var, self.record_stop_key_var):
             var.trace_add("write", lambda *_args: self._record_hotkeys_changed())
         self.beat_var.trace_add("write", lambda *_args: self._refresh_song_detail())
+        self.playback_rate_var.trace_add("write", lambda *_args: self._refresh_song_detail_safe())
         self.sequence_delay_var.trace_add("write", lambda *_args: self._update_sequence_status())
 
     def _build_ui(self) -> None:
@@ -959,6 +977,17 @@ class JianpuPlayerApp(tk.Tk):
         ttk.Entry(tags, textvariable=self.tags_var, width=23).pack(side="left")
         ttk.Button(tags, text="保存标签", command=self._save_current_tags, style="Inline.TButton").pack(side="left", padx=(5, 0))
         ttk.Label(now, textvariable=self.song_meta_var, style="MetaPanel.TLabel").grid(row=3, column=0, columnspan=2, sticky="w", pady=(7, 0))
+        rate_row = ttk.Frame(now, style="Panel.TFrame")
+        rate_row.grid(row=4, column=0, columnspan=2, sticky="w", pady=(9, 0))
+        ttk.Label(rate_row, text="播放倍率").pack(side="left")
+        ttk.Combobox(
+            rate_row,
+            textvariable=self.playback_rate_var,
+            values=PLAYBACK_RATE_PRESETS,
+            width=9,
+        ).pack(side="left", padx=(8, 6))
+        ttk.Button(rate_row, text="应用倍率", command=self._apply_playback_rate, style="Inline.TButton").pack(side="left")
+        ttk.Label(rate_row, text="0.25x～4.00x；超过2x可能丢键", style="MetaPanel.TLabel").pack(side="left", padx=(10, 0))
 
         visual = ttk.Frame(main, padding=(18, 12), style="Dark.TFrame")
         visual.grid(row=1, column=0, sticky="ew", pady=(10, 10))
@@ -1125,6 +1154,18 @@ class JianpuPlayerApp(tk.Tk):
         ttk.Spinbox(playback, from_=0, to=10, textvariable=self.countdown_var, width=7).grid(row=0, column=4, padx=(8, 22))
         ttk.Label(playback, text="队列间隔秒数").grid(row=0, column=5)
         ttk.Spinbox(playback, from_=0, to=600, textvariable=self.sequence_delay_var, width=7).grid(row=0, column=6, padx=(8, 0))
+        ttk.Label(playback, text="播放倍率").grid(row=1, column=0, sticky="w", pady=(12, 0))
+        ttk.Combobox(
+            playback,
+            textvariable=self.playback_rate_var,
+            values=PLAYBACK_RATE_PRESETS,
+            width=9,
+        ).grid(row=1, column=1, sticky="w", padx=(8, 12), pady=(12, 0))
+        ttk.Label(
+            playback,
+            text="可输入 0.25x～4.00x；超过2x可能丢键",
+            style="MetaPanel.TLabel",
+        ).grid(row=1, column=2, columnspan=5, sticky="w", pady=(12, 0))
 
         hotkeys = ttk.LabelFrame(page, text="全局热键", padding=16)
         hotkeys.grid(row=1, column=0, sticky="ew", pady=(12, 0))
@@ -1294,6 +1335,8 @@ class JianpuPlayerApp(tk.Tk):
         try:
             self._validate_record_hotkeys()
             self._beat_ms()
+            rate = normalize_playback_rate(self.playback_rate_var.get())
+            self.playback_rate_var.set(f"{rate:.2f}x")
         except ValueError as exc:
             messagebox.showerror("无法录制", str(exc))
             return
@@ -1453,12 +1496,18 @@ class JianpuPlayerApp(tk.Tk):
 
     def _on_song_selected(self, _event=None) -> None:
         metadata = self.library_store.get(self.song_var.get())
-        saved_speed = metadata.get("settings", {}).get("beat_ms") if isinstance(metadata.get("settings", {}), dict) else None
+        settings = metadata.get("settings", {}) if isinstance(metadata.get("settings", {}), dict) else {}
+        saved_speed = settings.get("beat_ms")
+        saved_rate = settings.get("playback_rate")
         recommended = recommended_beat_ms(self.song_var.get())
         if saved_speed is not None:
             self.beat_var.set(str(saved_speed))
         elif recommended is not None:
             self.beat_var.set(str(recommended))
+        if saved_rate is not None:
+            self.playback_rate_var.set(f"{normalize_playback_rate(saved_rate):.2f}x")
+        else:
+            self.playback_rate_var.set(f"{normalize_playback_rate(self.config_data.get('playback_rate', 1.0)):.2f}x")
         self.load_selected_song()
 
     def _update_song_metadata_ui(self) -> None:
@@ -1501,21 +1550,45 @@ class JianpuPlayerApp(tk.Tk):
         except ValueError as exc:
             messagebox.showerror("设置错误", str(exc))
             return
-        self.library_store.set_song_settings(name, beat_ms=beat_ms)
+        playback_rate = normalize_playback_rate(self.playback_rate_var.get())
+        self.playback_rate_var.set(f"{playback_rate:.2f}x")
+        self.library_store.set_song_settings(name, beat_ms=beat_ms, playback_rate=playback_rate)
         self._update_song_metadata_ui()
-        self.status_var.set(f"已保存《{name}》的专属速度：{beat_ms} ms/拍")
+        self.status_var.set(f"已保存《{name}》：{beat_ms} ms/拍，{playback_rate:.2f}x")
+
+    def _apply_playback_rate(self) -> None:
+        try:
+            rate = normalize_playback_rate(self.playback_rate_var.get())
+        except ValueError as exc:
+            messagebox.showerror("倍率设置错误", str(exc))
+            return
+        self.playback_rate_var.set(f"{rate:.2f}x")
+        name = self.song_var.get()
+        if name:
+            self.library_store.set_song_settings(name, playback_rate=rate)
+        self._refresh_song_detail_safe()
+        self.status_var.set(f"已应用播放倍率：{rate:.2f}x")
 
     def _refresh_song_detail(self) -> None:
         if not self.events:
             return
         beat_ms = self._beat_ms(default=700)
-        seconds = sum(event.beats for event in self.events) * beat_ms / 1000
+        rate = normalize_playback_rate(self.playback_rate_var.get())
+        effective_beat_ms = max(1, round(beat_ms / rate))
+        seconds = sum(event.beats for event in self.events) * effective_beat_ms / 1000
         recommended = recommended_beat_ms(self.song_var.get())
         recommendation = f" · 推荐 {recommended} ms/拍" if recommended is not None else ""
         self.detail_var.set(
-            f"{len(self.events)} 个事件{recommendation} · 当前预计 "
+            f"{len(self.events)} 个事件{recommendation} · {rate:.2f}x / 实际 {effective_beat_ms} ms/拍 · 当前预计 "
             f"{int(seconds // 60)}:{int(seconds % 60):02d}"
         )
+
+    def _refresh_song_detail_safe(self) -> None:
+        try:
+            self._refresh_song_detail()
+        except ValueError:
+            if self.events:
+                self.detail_var.set(f"{len(self.events)} 个事件 · 播放倍率待确认（0.25x～4.00x）")
 
     def _use_recommended_speed(self) -> None:
         recommended = recommended_beat_ms(self.song_var.get())
@@ -1524,6 +1597,7 @@ class JianpuPlayerApp(tk.Tk):
             return
         self.beat_var.set(str(recommended))
         self.status_var.set(f"已恢复推荐速度：{recommended} ms/拍")
+        self._refresh_song_detail()
 
     def import_songs(self) -> None:
         paths = filedialog.askopenfilenames(title="导入琴谱TXT", filetypes=[("琴谱TXT", "*.txt")])
@@ -1761,6 +1835,27 @@ class JianpuPlayerApp(tk.Tk):
             raise ValueError("一拍时间必须在50到5000毫秒之间。")
         return value
 
+    def _effective_beat_ms(self) -> int:
+        base = self._beat_ms()
+        rate = normalize_playback_rate(self.playback_rate_var.get())
+        value = round(base / rate)
+        if not 50 <= value <= 5000:
+            raise ValueError("当前倍率换算后的拍长必须在50到5000毫秒之间。")
+        self.playback_rate_var.set(f"{rate:.2f}x")
+        return value
+
+    def _playback_warning(self, effective_beat_ms: int) -> str | None:
+        rate = normalize_playback_rate(self.playback_rate_var.get())
+        shortest_ms = min((event.beats * effective_beat_ms for event in self.events), default=0.0)
+        warnings = []
+        if rate > 2.0:
+            warnings.append(f"当前为实验档 {rate:.2f}x")
+        if 0 < shortest_ms < 30:
+            warnings.append(f"最短事件间隔约 {shortest_ms:.1f} ms")
+        if not warnings:
+            return None
+        return "、".join(warnings) + "，可能出现丢键或连键。仍要继续试听吗？"
+
     def _countdown(self) -> int:
         try:
             value = int(float(self.countdown_var.get()))
@@ -1900,7 +1995,11 @@ class JianpuPlayerApp(tk.Tk):
                 self.status_var.set(f"未开始：前台窗口标题不包含“{expected}”")
                 return
         try:
-            beat_ms = self._beat_ms()
+            beat_ms = self._effective_beat_ms()
+            warning = self._playback_warning(beat_ms)
+            if warning and not messagebox.askyesno("高速播放提示", warning):
+                self.status_var.set("已取消高速播放。")
+                return
             countdown = 0 if sequence_start else self._countdown()
             self._sequence_delay()
             self._validate_hotkeys()
@@ -2013,10 +2112,7 @@ class JianpuPlayerApp(tk.Tk):
             return
         self.song_var.set(next_name)
         self._render_song_list(filter_song_names(list(self.song_paths), self.search_var.get()))
-        recommended = recommended_beat_ms(next_name)
-        if recommended is not None:
-            self.beat_var.set(str(recommended))
-        self.load_selected_song()
+        self._on_song_selected()
         self._render_sequence_queue()
         self.start_playback(sequence_start=True)
 

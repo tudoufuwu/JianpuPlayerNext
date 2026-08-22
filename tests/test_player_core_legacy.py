@@ -16,7 +16,7 @@ from player_core import (
     parse_song,
     recorded_presses_to_events,
 )
-from app import filter_song_names, recommended_beat_ms
+from app import filter_song_names, normalize_playback_rate, recommended_beat_ms
 
 
 class FakeBackend:
@@ -35,6 +35,18 @@ class FakeBackend:
             self.actions.append(("up", key))
             self.down.discard(key)
 
+
+class PlaybackRateTests(unittest.TestCase):
+    def test_presets_and_custom_values(self) -> None:
+        self.assertEqual(normalize_playback_rate("1.25x"), 1.25)
+        self.assertEqual(normalize_playback_rate("0.83"), 0.83)
+        self.assertEqual(normalize_playback_rate("3.50x"), 3.5)
+
+    def test_rate_range_is_bounded(self) -> None:
+        with self.assertRaises(ValueError):
+            normalize_playback_rate("0.24")
+        with self.assertRaises(ValueError):
+            normalize_playback_rate("4.01")
 
 class AccessDeniedBackend:
     def key_down(self, _key: str) -> None:

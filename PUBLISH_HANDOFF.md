@@ -1,6 +1,19 @@
 # GitHub 发布交接（下回合从这里继续）
 
+## 当前待发布版本 beta.47（2026-08-22）
+
+- Windows/Android 当前曲库为 267 首；新增 `song_264`–`song_267` 候选，均需游戏内试听确认。
+- Windows `dist/JianpuPlayerNext-v1.0.0-beta.47.exe`，SHA-256 `B70EC3E992E378A3DF4047C1A9B3AF8C6602E8B02DB13815E77FA57BCFA66FF4`。
+- Windows 主界面可直接调整播放倍率；设置页继续调整一拍时间；倍率范围 `0.25x`–`4.00x`。
+- Android 最新 debug APK：`app/build/outputs/apk/debug/app-debug.apk`，SHA-256 `C94255ECE23B76FFF6042A091E97480900E36E83A0FEC5CD3CEFB5951CC943D5`。
+- Android 悬浮曲库已将基础节拍和倍速分开调整，支持直接输入倍速。
+- 本次只更新仓库代码和交接文档；Release 附件和自动更新源仍待确认后发布。
+
 ## 当前本地曲库（2026-08-21）
+
+- Windows/Android 当前曲库为 264 首；新增 `song_264`《夏空的歌（短原版）》，推荐 535 ms/拍，状态 `requires_in_game_audition`。
+- Windows `dist/JianpuPlayerNext-v1.0.0-beta.46.exe`：14,924,412 bytes，SHA-256 `8FA86100D6C3FBB08A9D82FA8E577574346DE1FA582029BF95514DE0586416DE`。
+- Android `artifacts/PocketMusic21-v0.1.0-264songs-no-recording-debug.apk`：10,166,777 bytes，SHA-256 `6B69587A1D1DD77F1BE7928B6B9A5D2609AD7784C85EB49857109BE790C02707`。
 
 - Windows/Android 当前曲库为263首；新增 `song_258`–`song_263`：红豆、匆匆那年、素颜、一直很安静、传奇、千年之恋。
 - 六首均为 `requires_in_game_audition` 自动候选，未完成游戏内试听，不能称为 final。
