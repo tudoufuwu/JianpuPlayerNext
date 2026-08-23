@@ -1,5 +1,20 @@
 # GitHub 发布交接（下回合从这里继续）
 
+## 当前待发布版本 beta.48（2026-08-23）
+
+- Windows/Android 曲库同步至 270 首，新增 `song_269`《朝焼けのスターマイン（人声重跑）》和 `song_270`《Ring of Fortune（人声重跑）》，推荐均为 500 ms/拍。
+- 两首均为 `requires_in_game_audition` 候选，已通过 Parser、21 键范围及时长覆盖检查。
+- Windows EXE：`dist/JianpuPlayerNext-v1.0.0-beta.48.exe`，14,935,895 bytes，SHA-256 `D99CFEAE435482360193F90CDB3DF1F102E5240BF7F52845E16F88CE7224C6B9`。
+- Android debug APK：`mobile_player_android/app/build/outputs/apk/debug/app-debug.apk`，10,167,203 bytes，SHA-256 `27997EC2BA63D5981FA918F32E369859E702EF2CC0A9BCC00A4CC6CF4377432F`。
+- 双端单元/跨端检查通过；GitHub 源码和 Release 尚未推送。
+- `发布双端更新.ps1` 可生成带 UTC 时间戳的 `publish/releases/YYYYMMDD_HHmmss/`，显式加 `-Upload` 后通过 SSH 上传到服务器。
+
+## 当前待发布版本 beta.48（2026-08-22）
+
+- Windows/Android 当前曲库为 268 首；新增 `song_268`《孑遗者的故乡》，推荐 500 ms/拍。
+- 该曲为完整音频自动转谱候选，状态 `requires_in_game_audition`，等待用户试听；下次构建时纳入，当前尚未生成 EXE/APK。
+- GitHub、Release 和自动更新源保持未发布状态。
+
 ## 当前待发布版本 beta.47（2026-08-22）
 
 - Windows/Android 当前曲库为 267 首；新增 `song_264`–`song_267` 候选，均需游戏内试听确认。

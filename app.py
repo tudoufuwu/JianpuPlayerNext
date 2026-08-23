@@ -29,9 +29,9 @@ from preview_audio import LocalPreview
 
 
 APP_NAME = "21键弹琴自动化"
-APP_VERSION = "1.0.0-beta.47"
+APP_VERSION = "1.0.0-beta.48"
 HOTKEYS = [f"F{i}" for i in range(1, 13)]
-BUILTIN_LIBRARY_VERSION = 185
+BUILTIN_LIBRARY_VERSION = 187
 PLAYBACK_RATE_MIN = 0.25
 PLAYBACK_RATE_MAX = 4.0
 PLAYBACK_RATE_PRESETS = ("0.50x", "0.75x", "1.00x", "1.25x", "1.50x", "2.00x", "3.00x", "4.00x")
@@ -257,6 +257,9 @@ RECOMMENDED_BEAT_MS = {
     "传奇": 500,
     "千年之恋": 827,
     "夏空的歌（短原版）": 535,
+    "孑遗者的故乡": 500,
+    "朝焼けのスターマイン（人声重跑）": 500,
+    "Ring of Fortune（人声重跑）": 500,
 }
 
 

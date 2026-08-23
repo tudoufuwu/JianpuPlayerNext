@@ -4,14 +4,16 @@
 
 | 项目 | 当前值 |
 |---|---|
-| 应用版本 | `1.0.0-beta.47` |
-| 内置歌曲 | 267 首 |
-| 曲库版本 | 184 |
+| 应用版本 | `1.0.0-beta.48` |
+| 内置歌曲 | 270 首 |
+| 曲库版本 | 187 |
 | 自动测试 | 26/26 PASS |
 | Windows 当前已核验产物 | `dist/JianpuPlayerNext-v1.0.0-beta.46.exe` |
 | Windows 产物大小 | 14,924,412 bytes |
 | Windows SHA-256 | `8FA86100D6C3FBB08A9D82FA8E577574346DE1FA582029BF95514DE0586416DE` |
 | GitHub 状态 | 未上传；当前禁止创建或更新 Release |
+
+本轮新增《孑遗者的故乡》并同步为 Android `song_268`，推荐 500 ms/拍。来源音频 81.32 秒，生成 166 个事件，覆盖率 100.2%，Parser 往返通过；状态为 `requires_in_game_audition`，下次 Windows/Android 构建纳入，尚未生成新产物。
 
 本批新增14首经典候选：《普通DISCO》《达拉崩吧》《勾指起誓》《权御天下》《冠世一战》《神的随波逐流》《LOSER》《撒野》《unravel》《万神纪》《光年之外》《演员》《追梦赤子心》《世间美好与你环环相扣》，均已进入 Windows/Android 曲库，但状态仍为 `requires_in_game_audition`，不得描述为 final。
 
