@@ -2,7 +2,7 @@
 param(
     [string]$ServerHost,
     [string]$ServerUser = "root",
-    [string]$RemoteRoot = "/var/www/update/releases",
+    [string]$RemoteRoot = "/var/www/update",
     [string]$SshKeyPath,
     [switch]$Upload
 )
@@ -33,12 +33,16 @@ Copy-Item -LiteralPath $windowsAsset -Destination $windowsTarget
 Copy-Item -LiteralPath $androidAsset -Destination $androidTarget
 
 $manifest = [ordered]@{
-    schema = 1
+    schema = 2
+    product = "JianpuPlayerNext / PocketMusic21"
     version = "1.0.0-beta.48"
     libraryCount = 270
-    createdAt = (Get-Date).ToUniversalTime().ToString("o")
-    windows = [ordered]@{ file = "windows/$windowsName"; platform = "windows"; sha256 = (Get-FileHash $windowsTarget -Algorithm SHA256).Hash.ToLowerInvariant() }
-    android = [ordered]@{ file = "android/$androidName"; platform = "android"; sha256 = (Get-FileHash $androidTarget -Algorithm SHA256).Hash.ToLowerInvariant() }
+    releaseId = $timestamp
+    publishedAt = (Get-Date).ToUniversalTime().ToString("o")
+    platforms = [ordered]@{
+        windows = [ordered]@{ latestVersion = "1.0.0-beta.48"; download = "/windows/$windowsName"; archive = "/releases/$timestamp/windows/$windowsName"; sha256 = (Get-FileHash $windowsTarget -Algorithm SHA256).Hash.ToLowerInvariant() }
+        android = [ordered]@{ latestVersion = "0.1.0-mvp-270"; download = "/android/$androidName"; archive = "/releases/$timestamp/android/$androidName"; sha256 = (Get-FileHash $androidTarget -Algorithm SHA256).Hash.ToLowerInvariant() }
+    }
 }
 $manifestPath = Join-Path $releaseDir "manifest.json"
 $manifest | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $manifestPath -Encoding UTF8
@@ -53,8 +57,14 @@ if (-not $Upload) {
 $target = "$ServerUser@$ServerHost"
 $sshArgs = @()
 if (-not [string]::IsNullOrWhiteSpace($SshKeyPath)) { $sshArgs += @("-i", $SshKeyPath) }
-& ssh @sshArgs $target "mkdir -p '$RemoteRoot/$timestamp'"
+& ssh @sshArgs $target "mkdir -p '$RemoteRoot/releases/$timestamp' '$RemoteRoot/windows' '$RemoteRoot/android'"
 if ($LASTEXITCODE -ne 0) { throw "Remote directory creation failed" }
-& scp @sshArgs -r $releaseDir "$target`:$RemoteRoot/"
+& scp @sshArgs -r $releaseDir "$target`:$RemoteRoot/releases/"
 if ($LASTEXITCODE -ne 0) { throw "Upload failed" }
-Write-Host "Uploaded: $target`:$RemoteRoot/$timestamp"
+& scp @sshArgs $windowsTarget "$target`:$RemoteRoot/windows/$windowsName"
+if ($LASTEXITCODE -ne 0) { throw "Windows latest upload failed" }
+& scp @sshArgs $androidTarget "$target`:$RemoteRoot/android/$androidName"
+if ($LASTEXITCODE -ne 0) { throw "Android latest upload failed" }
+& scp @sshArgs $manifestPath "$target`:$RemoteRoot/manifest.json"
+if ($LASTEXITCODE -ne 0) { throw "Manifest upload failed" }
+Write-Host "Uploaded archive and latest files: $target`:$RemoteRoot (release $timestamp)"
