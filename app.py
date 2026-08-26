@@ -32,15 +32,27 @@ from preview_audio import LocalPreview
 
 
 APP_NAME = "21键弹琴自动化"
-APP_VERSION = "1.0.0-beta.50"
+APP_VERSION = "1.0.0-beta.51"
 HOTKEYS = [f"F{i}" for i in range(1, 13)]
-BUILTIN_LIBRARY_VERSION = 189
+BUILTIN_LIBRARY_VERSION = 190
 UPDATE_MANIFEST_URL = "https://xiaxia.ymjhcycg.dpdns.org/updates/manifest.json"
 UPDATE_HISTORY_URL = "https://xiaxia.ymjhcycg.dpdns.org/updates/index.html"
 PLAYBACK_RATE_MIN = 0.25
 PLAYBACK_RATE_MAX = 4.0
 PLAYBACK_RATE_PRESETS = ("0.50x", "0.75x", "1.00x", "1.25x", "1.50x", "2.00x", "3.00x", "4.00x")
 RECOMMENDED_BEAT_MS = {
+    "IF YOU": 750,
+    "ありがとう…": 857,
+    "东京不太热": 500,
+    "会呼吸的痛": 857,
+    "关键词": 853,
+    "千年泪": 929,
+    "反方向的钟": 640,
+    "在深秋": 703,
+    "小宇（蓝心羽）": 405,
+    "忘情牛肉面": 857,
+    "偏爱": 833,
+    "多幸运": 500,
     "知我": 714,
     "嗵嗵": 493,
     "Daisy Crown（Japanese Ver.）": 757,

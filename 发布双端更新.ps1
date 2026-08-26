@@ -11,7 +11,7 @@ param(
 $ErrorActionPreference = "Stop"
 $projectDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $androidDir = Join-Path (Split-Path -Parent $projectDir) "mobile_player_android"
-$windowsAsset = Join-Path $projectDir "dist\JianpuPlayerNext-v1.0.0-beta.50.exe"
+$windowsAsset = Join-Path $projectDir "dist\JianpuPlayerNext-v1.0.0-beta.51.exe"
 $androidAsset = Join-Path $androidDir "app\build\outputs\apk\debug\app-debug.apk"
 
 if (-not (Test-Path -LiteralPath $windowsAsset)) { throw "Windows artifact missing: $windowsAsset" }
@@ -27,7 +27,7 @@ $androidReleaseDir = Join-Path $releaseDir "android"
 New-Item -ItemType Directory -Force -Path $windowsDir, $androidReleaseDir | Out-Null
 
 $windowsName = Split-Path -Leaf $windowsAsset
-$androidName = "PocketMusic21-v0.1.0-mvp-20260826-282songs-debug.apk"
+$androidName = "PocketMusic21-v0.1.0-mvp-20260826-r2-294songs-debug.apk"
 $windowsTarget = Join-Path $windowsDir $windowsName
 $androidTarget = Join-Path $androidReleaseDir $androidName
 Copy-Item -LiteralPath $windowsAsset -Destination $windowsTarget
@@ -36,9 +36,9 @@ Copy-Item -LiteralPath $androidAsset -Destination $androidTarget
 $manifest = [ordered]@{
     schema = 2
     product = "JianpuPlayerNext / PocketMusic21"
-    version = "1.0.0-beta.50"
-    libraryCount = 282
-    androidVersion = "0.1.0-mvp-20260826"
+    version = "1.0.0-beta.51"
+    libraryCount = 294
+    androidVersion = "0.1.0-mvp-20260826-r2"
     userContentPolicy = "User-imported and recorded TXT songs are stored outside bundled assets and preserved across updates."
     releaseId = $timestamp
     publishedAt = (Get-Date).ToUniversalTime().ToString("o")
@@ -48,8 +48,8 @@ $manifest = [ordered]@{
         userData = "User-recorded or imported TXT files must remain in the user's data directory and are not replaced by library updates."
     }
     platforms = [ordered]@{
-        windows = [ordered]@{ latestVersion = "1.0.0-beta.50"; download = "/windows/$windowsName"; archive = "/releases/$timestamp/windows/$windowsName"; sha256 = (Get-FileHash $windowsTarget -Algorithm SHA256).Hash.ToLowerInvariant() }
-        android = [ordered]@{ latestVersion = "0.1.0-mvp-20260826"; download = "/android/$androidName"; archive = "/releases/$timestamp/android/$androidName"; sha256 = (Get-FileHash $androidTarget -Algorithm SHA256).Hash.ToLowerInvariant() }
+        windows = [ordered]@{ latestVersion = "1.0.0-beta.51"; download = "/windows/$windowsName"; archive = "/releases/$timestamp/windows/$windowsName"; sha256 = (Get-FileHash $windowsTarget -Algorithm SHA256).Hash.ToLowerInvariant() }
+        android = [ordered]@{ latestVersion = "0.1.0-mvp-20260826-r2"; download = "/android/$androidName"; archive = "/releases/$timestamp/android/$androidName"; sha256 = (Get-FileHash $androidTarget -Algorithm SHA256).Hash.ToLowerInvariant() }
     }
 }
 $manifestPath = Join-Path $releaseDir "manifest.json"
