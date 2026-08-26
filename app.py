@@ -1227,19 +1227,33 @@ class JianpuPlayerApp(tk.Tk):
 
     def check_for_updates(self) -> None:
         """Fetch the public manifest without blocking playback or the UI."""
+        self.status_var.set("正在连接更新源…")
+
+        def show_result(manifest: dict) -> None:
+            latest = manifest.get("platforms", {}).get("windows", {}).get("latestVersion", manifest.get("version", "未知"))
+            notes = manifest.get("releaseNotes", [])
+            has_update = latest != APP_VERSION
+            message = f"当前版本：{APP_VERSION}\n最新版本：{latest}\n曲库：{manifest.get('libraryCount', '?')} 首"
+            if notes:
+                message += "\n\n本次更新：\n" + "\n".join(f"• {item}" for item in notes)
+            self.status_var.set(f"发现新版本：{latest}" if has_update else "当前已经是最新版。")
+            if has_update:
+                message += "\n\n是否打开更新中心？页面顶部可直接选择 Windows 或 Android 下载。"
+                if messagebox.askyesno("发现新版本", message, parent=self):
+                    webbrowser.open(UPDATE_HISTORY_URL)
+            else:
+                messagebox.showinfo("检查更新", message, parent=self)
+
         def worker() -> None:
             try:
                 request = urllib.request.Request(UPDATE_MANIFEST_URL, headers={"User-Agent": "JianpuPlayerNext"})
-                with urllib.request.urlopen(request, timeout=8) as response:
+                with urllib.request.urlopen(request, timeout=4) as response:
                     manifest = json.loads(response.read().decode("utf-8-sig"))
-                latest = manifest.get("platforms", {}).get("windows", {}).get("latestVersion", manifest.get("version", "未知"))
-                notes = manifest.get("releaseNotes", [])
-                message = f"更新源连接正常。\n当前版本：{APP_VERSION}\n最新版本：{latest}\n曲库：{manifest.get('libraryCount', '?')} 首"
-                if notes:
-                    message += "\n\n本次说明：\n" + "\n".join(f"· {item}" for item in notes)
-                self.after(0, lambda: messagebox.showinfo("检查更新", message, parent=self))
+                self.after(0, show_result, manifest)
             except Exception as exc:
-                self.after(0, lambda: messagebox.showerror("检查更新失败", f"无法连接更新源：{exc}", parent=self))
+                error = str(exc)
+                self.after(0, self.status_var.set, "检查更新失败；可直接打开历史版本页。")
+                self.after(0, lambda detail=error: messagebox.showerror("检查更新失败", f"4 秒内未能连接更新源：{detail}\n\n你仍可点击“打开历史版本”进入下载页。", parent=self))
         threading.Thread(target=worker, daemon=True, name="update-check").start()
 
     def _build_transport(self, shell: ttk.Frame) -> None:
