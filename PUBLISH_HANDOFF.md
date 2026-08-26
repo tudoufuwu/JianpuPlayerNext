@@ -1,6 +1,23 @@
-# GitHub 发布交接（下回合从这里继续）
+# GitHub 发布交接（beta.50）
 
-## 当前待发布版本 beta.48（2026-08-23）
+## 当前发布版本 beta.50（2026-08-26）
+
+- Windows/Android 曲库同步至 282 首，曲库版本 189；新增《知我》简谱候选，推荐 714 ms/拍。
+- 《知我》来源为用户提供的两页完整简谱图片，人工核对反复/房子/变拍/转调后展开；状态 `candidate`，密集尾奏需游戏内试听确认。
+- Android 版本 `0.1.0-mvp-20260826`，Windows 版本 `1.0.0-beta.50`。
+- 更新源本版必须包含 `releaseNotes`、本版双端下载、历史版本展开说明；用户导入/录制 TXT 保存在本地用户数据目录，升级不覆盖。
+- 本次构建完成后，EXE/APK 哈希与实际发布时间写入本节和维护日志。
+
+## 当前发布版本 beta.49（2026-08-24）
+
+- Windows/Android 曲库同步至 271 首，曲库版本 188；新增《NIGHT DANCER（人声重跑）》候选谱，推荐 511 ms/拍，仍需游戏内试听确认。
+- Windows EXE：`dist/JianpuPlayerNext-v1.0.0-beta.49.exe`，14,936,949 bytes，SHA-256 `528AA6167608DC0715BAEF0350C58A5F4BB8C708911FB2A0320A19E4CE21BF5E`。
+- Android debug APK：`app/build/outputs/apk/debug/app-debug.apk`，9,925,082 bytes，SHA-256 `868124520B6BE3DD55D50E76FC9F31C3F8EE9D9A32211BF78C5188B845FA74AA`；版本名 `0.1.0-mvp-20260824`。
+- 更新源本地发布目录：`publish/releases/20260824_082920/`；`publish/index.html` 支持展开查看版本说明并保留旧版本链接。
+- 用户导入/录制 TXT 保存在 `%LOCALAPPDATA%\\JianpuPlayerNext\\songs`；升级逻辑通过内置文件哈希清单避免覆盖用户改动。
+- 服务器上传尚未执行：当前环境没有可用 SSH 私钥，批量发布脚本已准备好，获得密钥后可用 `发布双端更新.ps1 -Upload -ServerHost <host> -SshKeyPath <key>`。
+
+## 历史版本 beta.48（2026-08-23）
 
 - Windows/Android 曲库同步至 270 首，新增 `song_269`《朝焼けのスターマイン（人声重跑）》和 `song_270`《Ring of Fortune（人声重跑）》，推荐均为 500 ms/拍。
 - 两首均为 `requires_in_game_audition` 候选，已通过 Parser、21 键范围及时长覆盖检查。

@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 import ctypes
 from ctypes import wintypes
+import hashlib
 import json
 import os
 import shutil
@@ -11,6 +12,8 @@ import sys
 import threading
 import time
 import tkinter as tk
+import urllib.request
+import webbrowser
 from tkinter import filedialog, messagebox, simpledialog, ttk
 
 from library_store import LibraryStore
@@ -29,13 +32,16 @@ from preview_audio import LocalPreview
 
 
 APP_NAME = "21键弹琴自动化"
-APP_VERSION = "1.0.0-beta.48"
+APP_VERSION = "1.0.0-beta.50"
 HOTKEYS = [f"F{i}" for i in range(1, 13)]
-BUILTIN_LIBRARY_VERSION = 187
+BUILTIN_LIBRARY_VERSION = 189
+UPDATE_MANIFEST_URL = "https://xiaxia.ymjhcycg.dpdns.org/updates/manifest.json"
+UPDATE_HISTORY_URL = "https://xiaxia.ymjhcycg.dpdns.org/updates/index.html"
 PLAYBACK_RATE_MIN = 0.25
 PLAYBACK_RATE_MAX = 4.0
 PLAYBACK_RATE_PRESETS = ("0.50x", "0.75x", "1.00x", "1.25x", "1.50x", "2.00x", "3.00x", "4.00x")
 RECOMMENDED_BEAT_MS = {
+    "知我": 714,
     "嗵嗵": 493,
     "Daisy Crown（Japanese Ver.）": 757,
     "发如雪": 1083,
@@ -73,6 +79,7 @@ RECOMMENDED_BEAT_MS = {
     "长生诀": 826,
     "十年人间": 619,
     "红昭愿": 541,
+    "NIGHT DANCER_人声重跑": 511,
     "芒种": 740,
     "我本将心向明月": 673,
     "游山恋": 706,
@@ -544,17 +551,38 @@ class JianpuPlayerApp(tk.Tk):
         if not source.exists():
             return
         version_path = self.data_dir / "builtin_library_version.txt"
+        manifest_path = self.data_dir / "builtin_songs_manifest.json"
+        try:
+            previous_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+            if not isinstance(previous_manifest, dict):
+                previous_manifest = {}
+        except (OSError, ValueError, TypeError):
+            previous_manifest = {}
         try:
             installed_version = int(version_path.read_text(encoding="utf-8").strip())
         except (OSError, ValueError):
             installed_version = 0
         upgrade = installed_version < BUILTIN_LIBRARY_VERSION
+        current_manifest: dict[str, str] = {}
         for item in source.glob("*.txt"):
             destination = self.songs_dir / item.name
-            if upgrade or not destination.exists():
+            source_hash = hashlib.sha256(item.read_bytes()).hexdigest()
+            current_manifest[item.name] = source_hash
+            previous_hash = previous_manifest.get(item.name)
+            # Only replace a prior built-in copy. A same-named user import is
+            # left untouched so upgrades never destroy user-owned songs.
+            try:
+                destination_hash = hashlib.sha256(destination.read_bytes()).hexdigest() if destination.exists() else None
+            except OSError:
+                destination_hash = None
+            safe_to_replace = not destination.exists() or previous_hash == destination_hash
+            if upgrade and safe_to_replace:
+                shutil.copy2(item, destination)
+            elif not destination.exists():
                 shutil.copy2(item, destination)
         if upgrade:
             version_path.write_text(str(BUILTIN_LIBRARY_VERSION), encoding="utf-8")
+        manifest_path.write_text(json.dumps(current_manifest, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
 
     def _load_config(self) -> dict:
         try:
@@ -871,6 +899,9 @@ class JianpuPlayerApp(tk.Tk):
             style="Meta.TLabel",
         ).grid(row=1, column=0, columnspan=2, sticky="w")
         ttk.Label(header, text=f"Beta {APP_VERSION}", style="Count.TLabel").grid(row=0, column=2, rowspan=2, sticky="e")
+        ttk.Button(header, text="检查更新", command=self.check_for_updates, style="Inline.TButton").grid(
+            row=0, column=3, rowspan=2, sticky="e", padx=(14, 0)
+        )
 
         self.pages = ttk.Notebook(shell, style="Studio.TNotebook")
         self.pages.grid(row=1, column=0, sticky="nsew")
@@ -1182,11 +1213,34 @@ class JianpuPlayerApp(tk.Tk):
         ttk.Entry(safety, textvariable=self.window_title_var, width=24).grid(row=0, column=1, padx=(10, 0))
         ttk.Label(safety, text="绑定窗口后会自动切换为后台发送；解绑后恢复前台发送。", style="MetaPanel.TLabel").grid(row=1, column=0, columnspan=2, sticky="w", pady=(8, 0))
 
+        updates = ttk.LabelFrame(page, text="更新源", padding=16)
+        updates.grid(row=3, column=0, sticky="ew", pady=(12, 0))
+        ttk.Button(updates, text="检查最新版本", command=self.check_for_updates, style="Inline.TButton").grid(row=0, column=0, sticky="w")
+        ttk.Button(updates, text="打开历史版本", command=lambda: webbrowser.open(UPDATE_HISTORY_URL), style="Quiet.TButton").grid(row=0, column=1, sticky="w", padx=8)
+        ttk.Label(updates, text="历史页可展开说明并选择旧版本下载。", style="MetaPanel.TLabel").grid(row=1, column=0, columnspan=2, sticky="w", pady=(8, 0))
+
         actions = ttk.Frame(page, style="App.TFrame")
-        actions.grid(row=3, column=0, sticky="ew", pady=(14, 0))
+        actions.grid(row=4, column=0, sticky="ew", pady=(14, 0))
         ttk.Button(actions, text="保存全部设置", command=self._save_with_notice, style="Primary.TButton").pack(side="left")
         ttk.Button(actions, text="保存当前歌曲速度", command=self._save_current_song_settings, style="Gold.TButton").pack(side="left", padx=8)
         ttk.Label(actions, text=f"数据目录：{self.data_dir}", style="Meta.TLabel").pack(side="right")
+
+    def check_for_updates(self) -> None:
+        """Fetch the public manifest without blocking playback or the UI."""
+        def worker() -> None:
+            try:
+                request = urllib.request.Request(UPDATE_MANIFEST_URL, headers={"User-Agent": "JianpuPlayerNext"})
+                with urllib.request.urlopen(request, timeout=8) as response:
+                    manifest = json.loads(response.read().decode("utf-8-sig"))
+                latest = manifest.get("platforms", {}).get("windows", {}).get("latestVersion", manifest.get("version", "未知"))
+                notes = manifest.get("releaseNotes", [])
+                message = f"更新源连接正常。\n当前版本：{APP_VERSION}\n最新版本：{latest}\n曲库：{manifest.get('libraryCount', '?')} 首"
+                if notes:
+                    message += "\n\n本次说明：\n" + "\n".join(f"· {item}" for item in notes)
+                self.after(0, lambda: messagebox.showinfo("检查更新", message, parent=self))
+            except Exception as exc:
+                self.after(0, lambda: messagebox.showerror("检查更新失败", f"无法连接更新源：{exc}", parent=self))
+        threading.Thread(target=worker, daemon=True, name="update-check").start()
 
     def _build_transport(self, shell: ttk.Frame) -> None:
         transport = ttk.Frame(shell, padding=(14, 10), style="Transport.TFrame")
