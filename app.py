@@ -34,7 +34,7 @@ from preview_audio import LocalPreview
 
 
 APP_NAME = "21键弹琴自动化"
-APP_VERSION = "1.0.0-beta.51"
+APP_VERSION = "1.0.0-beta.52"
 HOTKEYS = [f"F{i}" for i in range(1, 13)]
 BUILTIN_LIBRARY_VERSION = 190
 UPDATE_MANIFEST_URL = "https://xiaxia.ymjhcycg.dpdns.org/updates/manifest.json"
@@ -197,6 +197,8 @@ RECOMMENDED_BEAT_MS = {
     "Mojito": 513,
     "最伟大的作品": 419,
     "春庭雪": 800,
+    "可惜没如果（片段试听）": 750,
+    "可惜没如果（双轨演示）": 750,
     "鸳鸯戏": 938,
     "长安姑娘": 750,
     "将夜·未明": 464,

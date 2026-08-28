@@ -200,10 +200,13 @@ class BuiltinLibraryRegressionTests(unittest.TestCase):
         self.assertGreater(len(files), 200)
         for path in files:
             with self.subTest(song=path.name):
-                legacy = parse_song(path)
                 program = parse_song_program(path)
-                self.assertFalse(program.is_multi, path.name)
-                self.assertEqual(program.main_events, legacy, path.name)
+                if program.is_multi:
+                    # v2 曲目（如《可惜没如果（双轨演示）》）旧解析器应明确拒绝。
+                    with self.assertRaises(ValueError):
+                        parse_song(path)
+                else:
+                    self.assertEqual(program.main_events, parse_song(path), path.name)
 
 
 if __name__ == "__main__":
