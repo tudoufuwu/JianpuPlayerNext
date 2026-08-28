@@ -1,9 +1,16 @@
 # -*- mode: python ; coding: utf-8 -*-
 
+import re
+from pathlib import Path
+
 from PyInstaller.utils.win32 import winutils
 
 winutils.set_exe_build_timestamp = lambda *args, **kwargs: None
 winutils.update_exe_pe_checksum = lambda *args, **kwargs: None
+
+# EXE 名跟随 app.py 的 APP_VERSION，避免 spec 与版本错位覆盖旧产物。
+_app_source = (Path(SPECPATH) / "app.py").read_text(encoding="utf-8")
+APP_VERSION = re.search(r'APP_VERSION = "([^"]+)"', _app_source).group(1)
 
 a = Analysis(
     ["app.py"],
@@ -25,7 +32,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name="JianpuPlayerNext-v1.0.0-beta.51",
+    name=f"JianpuPlayerNext-v{APP_VERSION}",
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
