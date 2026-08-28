@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+from bisect import bisect_right
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Iterable, Protocol
 import ctypes
 from ctypes import wintypes
+import re
 import threading
 import time
 
@@ -12,12 +14,37 @@ import time
 PLAYABLE_KEYS = "qwertyuasdfghjzxcvbnm"
 ALLOWED_KEYS = frozenset(PLAYABLE_KEYS + "p")
 KEY_ORDER = {key: index for index, key in enumerate(PLAYABLE_KEYS)}
+TRACK_NAMES = ("main", "accomp")
 
 
 @dataclass(frozen=True)
 class SongEvent:
     keys: str
     beats: float
+
+
+@dataclass(frozen=True)
+class Track:
+    name: str
+    events: tuple[SongEvent, ...]
+
+
+@dataclass(frozen=True)
+class SongProgram:
+    """One or more tracks played in parallel; see docs/MULTITRACK_FORMAT.md."""
+
+    tracks: tuple[Track, ...]
+
+    @property
+    def is_multi(self) -> bool:
+        return len(self.tracks) > 1
+
+    @property
+    def main_events(self) -> list[SongEvent]:
+        for track in self.tracks:
+            if track.name == "main":
+                return list(track.events)
+        return list(self.tracks[0].events)
 
 
 def recorded_presses_to_events(
@@ -94,42 +121,88 @@ def format_song_txt(events: Iterable[SongEvent], *, beat_ms: int | None = None) 
     return "\n".join(lines) + "\n"
 
 
+def _read_song_text(path: Path) -> str:
+    try:
+        return path.read_text(encoding="utf-8-sig")
+    except UnicodeDecodeError:
+        return path.read_text(encoding="gb18030")
+
+
+def _parse_event_line(line: str, line_no: int) -> SongEvent:
+    parts = line.split()
+    if len(parts) != 2:
+        raise ValueError(f"第 {line_no} 行格式错误，应为：按键 拍数")
+    keys = parts[0].lower()
+    invalid = sorted(set(keys) - ALLOWED_KEYS)
+    if invalid:
+        raise ValueError(f"第 {line_no} 行包含不支持的按键：{''.join(invalid)}")
+    # `p` is a logical rest marker, not a playable keyboard key.  It
+    # must occupy the whole event; accepting e.g. `ap` would otherwise
+    # send the physical P key and silently turn a malformed rest/chord
+    # into a different performance.
+    if "p" in keys and keys != "p":
+        raise ValueError(f"第 {line_no} 行休止符 p 不能与其他按键组成和弦")
+    if len(set(keys)) != len(keys):
+        raise ValueError(f"第 {line_no} 行存在重复按键：{keys}")
+    try:
+        beats = float(parts[1])
+    except ValueError as exc:
+        raise ValueError(f"第 {line_no} 行拍数不是数字：{parts[1]}") from exc
+    if not 0 < beats <= 64:
+        raise ValueError(f"第 {line_no} 行拍数必须大于0且不超过64")
+    return SongEvent(keys, beats)
+
+
 def parse_song(path: str | Path) -> list[SongEvent]:
     path = Path(path)
-    try:
-        text = path.read_text(encoding="utf-8-sig")
-    except UnicodeDecodeError:
-        text = path.read_text(encoding="gb18030")
+    text = _read_song_text(path)
     events: list[SongEvent] = []
     for line_no, raw in enumerate(text.splitlines(), 1):
         line = raw.strip()
         if not line or line.startswith("#") or line.startswith("//"):
             continue
-        parts = line.split()
-        if len(parts) != 2:
-            raise ValueError(f"第 {line_no} 行格式错误，应为：按键 拍数")
-        keys = parts[0].lower()
-        invalid = sorted(set(keys) - ALLOWED_KEYS)
-        if invalid:
-            raise ValueError(f"第 {line_no} 行包含不支持的按键：{''.join(invalid)}")
-        # `p` is a logical rest marker, not a playable keyboard key.  It
-        # must occupy the whole event; accepting e.g. `ap` would otherwise
-        # send the physical P key and silently turn a malformed rest/chord
-        # into a different performance.
-        if "p" in keys and keys != "p":
-            raise ValueError(f"第 {line_no} 行休止符 p 不能与其他按键组成和弦")
-        if len(set(keys)) != len(keys):
-            raise ValueError(f"第 {line_no} 行存在重复按键：{keys}")
-        try:
-            beats = float(parts[1])
-        except ValueError as exc:
-            raise ValueError(f"第 {line_no} 行拍数不是数字：{parts[1]}") from exc
-        if not 0 < beats <= 64:
-            raise ValueError(f"第 {line_no} 行拍数必须大于0且不超过64")
-        events.append(SongEvent(keys, beats))
+        events.append(_parse_event_line(line, line_no))
     if not events:
         raise ValueError("TXT 中没有可播放的音符事件。")
     return events
+
+
+def parse_song_program(path: str | Path) -> SongProgram:
+    """Parse a v1 single-track TXT or a v2 `[track]`-sectioned multi-track TXT.
+
+    Old parsers reject v2 files outright because `[track …]` lines are not
+    valid `按键 拍数` events — see docs/MULTITRACK_FORMAT.md for the
+    compatibility rationale.
+    """
+    path = Path(path)
+    text = _read_song_text(path)
+    names: list[str] = ["main"]
+    tracks: list[list[SongEvent]] = [[]]
+    for line_no, raw in enumerate(text.splitlines(), 1):
+        line = raw.strip()
+        if not line or line.startswith("#") or line.startswith("//"):
+            continue
+        if line.startswith("["):
+            marker = re.fullmatch(r"\[track\s+([a-zA-Z]+)\]", line)
+            if marker is None:
+                raise ValueError(f"第 {line_no} 行无法识别的分轨标记：{line}")
+            name = marker.group(1).lower()
+            if name not in TRACK_NAMES:
+                raise ValueError(f"第 {line_no} 行不支持的轨道名：{name}")
+            # An explicit leading `[track main]` re-declares the implicit
+            # first track; only treat it as a duplicate once it holds events
+            # or another section exists.
+            redeclares_first = name == "main" and names == ["main"] and not tracks[0]
+            if name in names and not redeclares_first:
+                raise ValueError(f"第 {line_no} 行轨道重复：{name}")
+            if not redeclares_first:
+                names.append(name)
+                tracks.append([])
+            continue
+        tracks[-1].append(_parse_event_line(line, line_no))
+    if any(not events for events in tracks):
+        raise ValueError("每条轨都至少需要一个音符事件。")
+    return SongProgram(tuple(Track(name, tuple(events)) for name, events in zip(names, tracks)))
 
 
 class KeyBackend(Protocol):
@@ -269,8 +342,85 @@ class WindowMessageKeyBackend:
         self._send(key, True)
 
 
+def _program_actions(program: SongProgram, beat_seconds: float) -> list[tuple[float, int, str]]:
+    """Flatten every track onto one absolute timeline.
+
+    Returns `(time, kind, key)` actions sorted by time; `kind` 0 = release
+    sorts before 1 = press so simultaneous boundary events release first.
+    """
+    actions: list[tuple[float, int, str]] = []
+    for track in program.tracks:
+        cursor = 0.0
+        for event in track.events:
+            duration = event.beats * beat_seconds
+            if event.keys != "p":
+                half = duration / 2.0
+                for key in event.keys:
+                    actions.append((cursor, 1, key))
+                    actions.append((cursor + half, 0, key))
+            cursor += duration
+    actions.sort(key=lambda item: (item[0], item[1]))
+    return actions
+
+
+def _build_program_plan(
+    program: SongProgram,
+    beat_seconds: float,
+    start_time: float,
+) -> tuple[list[list], list[str], float]:
+    """Compile program actions into sequential `(delta, downs, ups)` steps.
+
+    Returns `(steps, initial_held, start_time)`.  Actions before the seek
+    boundary are folded into `initial_held` so crossing notes stay pressed;
+    a physical key is only pressed on the 0→1 reference transition and
+    released when its last holder lets go.
+    """
+    actions = _program_actions(program, beat_seconds)
+    refcounts: dict[str, int] = {}
+    index = 0
+    while index < len(actions) and actions[index][0] < start_time:
+        _, kind, key = actions[index]
+        if kind == 1:
+            refcounts[key] = refcounts.get(key, 0) + 1
+        else:
+            count = refcounts.get(key, 0) - 1
+            if count <= 0:
+                refcounts.pop(key, None)
+            else:
+                refcounts[key] = count
+        index += 1
+    initial_held = sorted(refcounts)
+    steps: list[list] = []
+    prev_time = start_time
+    for time, kind, key in actions[index:]:
+        if time > prev_time:
+            steps.append([time - prev_time, [], []])
+            prev_time = time
+        elif not steps:
+            steps.append([0.0, [], []])
+        step = steps[-1]
+        if kind == 1:
+            count = refcounts.get(key, 0) + 1
+            refcounts[key] = count
+            if count == 1:
+                step[1].append(key)
+        elif key in refcounts:
+            count = refcounts[key] - 1
+            if count <= 0:
+                refcounts.pop(key, None)
+                step[2].append(key)
+            else:
+                refcounts[key] = count
+    return steps, initial_held, start_time
+
+
 class PlaybackEngine:
-    """Threaded player preserving the original half-hold/half-rest timing."""
+    """Threaded player preserving the original half-hold/half-rest timing.
+
+    Accepts either a flat `list[SongEvent]` (v1 behaviour, untouched) or a
+    `SongProgram` whose tracks are merged onto one absolute timeline with
+    refcounted key holds.
+    """
 
     def __init__(
         self,
@@ -297,11 +447,14 @@ class PlaybackEngine:
 
     def start(
         self,
-        events: Iterable[SongEvent],
+        events: Iterable[SongEvent] | SongProgram,
         beat_ms: int,
         countdown: int = 0,
         start_index: int = 0,
     ) -> None:
+        if isinstance(events, SongProgram):
+            self._start_program(events, beat_ms, countdown, start_index)
+            return
         if self.running:
             if self.paused:
                 self.resume()
@@ -388,6 +541,96 @@ class PlaybackEngine:
             last = now
             time.sleep(min(0.01, max(0.001, remaining)))
         return not self._stop.is_set()
+
+    def _start_program(
+        self,
+        program: SongProgram,
+        beat_ms: int,
+        countdown: int,
+        start_index: int,
+    ) -> None:
+        if self.running:
+            if self.paused:
+                self.resume()
+            return
+        if not 50 <= beat_ms <= 5000:
+            raise ValueError("一拍时间必须在 50–5000 毫秒之间。")
+        main_events = program.main_events
+        if not main_events:
+            raise ValueError("没有可播放事件。")
+        if not 0 <= start_index < len(main_events):
+            raise ValueError("播放起点超出歌曲范围。")
+        beat_seconds = beat_ms / 1000.0
+        start_time = sum(event.beats for event in main_events[:start_index]) * beat_seconds
+        plan = _build_program_plan(program, beat_seconds, start_time)
+        self._stop.clear()
+        self._pause.clear()
+        self._thread = threading.Thread(
+            target=self._run_program,
+            args=(plan, main_events, beat_seconds, max(0, countdown), start_index),
+            daemon=True,
+            name="song-playback-program",
+        )
+        self._thread.start()
+
+    def _run_program(
+        self,
+        plan: tuple[list[list], list[str], float],
+        main_events: list[SongEvent],
+        beat_seconds: float,
+        countdown: int,
+        start_index: int,
+    ) -> None:
+        steps, initial_held, start_time = plan
+        stopped_by_user = False
+        try:
+            for value in range(countdown, 0, -1):
+                self.on_state("countdown", f"{value} 秒后开始")
+                if not self._wait(1.0):
+                    return
+            self.on_state("playing", "正在播放")
+            if initial_held:
+                self._press("".join(initial_held))
+            total = len(main_events)
+            bounds: list[float] = []
+            accumulated = 0.0
+            for event in main_events:
+                accumulated += event.beats * beat_seconds
+                bounds.append(accumulated)
+            reported = start_index
+            musical_time = start_time
+            for delta, downs, ups in steps:
+                if self._stop.is_set():
+                    return
+                # Releases precede presses at the same instant.
+                if ups:
+                    self._release("".join(ups))
+                if downs:
+                    self._press("".join(downs))
+                restore = "".join(sorted(self._held)) if self._held else ""
+                if not self._wait(delta, restore):
+                    return
+                musical_time += delta
+                covered = bisect_right(bounds, musical_time)
+                if covered > reported:
+                    reported = covered
+                    self.on_progress(covered, total, main_events[min(covered, total) - 1])
+            if reported < total:
+                self.on_progress(total, total, main_events[-1])
+            self.on_state("finished", "播放完成")
+        except Exception as exc:  # noqa: BLE001 - report device errors to the UI
+            if getattr(exc, "winerror", None) == 5:
+                message = "目标窗口权限更高，Windows 已阻止后台按键。请以管理员身份运行播放器后重新绑定。"
+            else:
+                message = str(exc)
+            self.on_state("error", f"播放错误：{message}")
+        finally:
+            stopped_by_user = self._stop.is_set()
+            self.release_all()
+            self._pause.clear()
+            self._stop.clear()
+            if stopped_by_user:
+                self.on_state("stopped", "已停止")
 
     def _run(
         self,

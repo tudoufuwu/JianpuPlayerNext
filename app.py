@@ -22,10 +22,12 @@ from player_core import (
     PLAYABLE_KEYS,
     PlaybackEngine,
     SongEvent,
+    SongProgram,
     WindowMessageKeyBackend,
     WindowsKeyBackend,
     format_song_txt,
     parse_song,
+    parse_song_program,
     recorded_presses_to_events,
 )
 from preview_audio import LocalPreview
@@ -520,6 +522,7 @@ class JianpuPlayerApp(tk.Tk):
         self.keyboard_labels: dict[str, ttk.Label] = {}
         self.sequence_queue: list[str] = []
         self._sequence_after_id: str | None = None
+        self.program: SongProgram | None = None
         self._playback_start_index = 0
         self._has_seek_position = False
         self._seeking = False
@@ -1557,13 +1560,16 @@ class JianpuPlayerApp(tk.Tk):
         path = self.song_paths.get(name)
         if not path:
             self.events = []
+            self.program = None
             self.current_song_var.set("尚未选择歌曲")
             self.detail_var.set("曲库为空，请导入TXT。")
             return
         try:
-            self.events = parse_song(path)
+            self.program = parse_song_program(path)
+            self.events = self.program.main_events
         except Exception as exc:  # noqa: BLE001
             self.events = []
+            self.program = None
             self.current_song_var.set(name)
             self.detail_var.set(f"文件错误：{exc}")
             return
@@ -1690,7 +1696,7 @@ class JianpuPlayerApp(tk.Tk):
         for raw in paths:
             source = Path(raw)
             try:
-                parse_song(source)
+                parse_song_program(source)
             except Exception as exc:  # noqa: BLE001
                 messagebox.showerror("无法导入", f"{source.name}\n{exc}")
                 continue
@@ -2089,7 +2095,7 @@ class JianpuPlayerApp(tk.Tk):
             self.save_config()
             started_from = self._playback_start_index
             self.engine.start(
-                self.events,
+                self.program if (self.program and self.program.is_multi) else self.events,
                 beat_ms,
                 countdown,
                 start_index=self._playback_start_index,
