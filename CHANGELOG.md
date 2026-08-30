@@ -7,6 +7,7 @@
 - 导入校验改用 `parse_song_program`，v2 文件可正常导入。
 - 曲库由 294 首增至 296 首，曲库版本更新为 191；新增《可惜没如果（片段试听）》（m1-20，750 ms/拍）与《可惜没如果（双轨演示）》（m9-20 双轨，750 ms/拍），均为 AI 识谱 candidate，需游戏内试听。
 - 《可惜没如果（双轨演示）》为本版多轨能力的验收样例；Android 端多轨解析待同步。
+- 新增《生日快乐》候选（徐华英词/Patti Hill曲/陈洲宏记谱版，用户提供原图，1=F 3/4→4/4，600 ms/拍），精读级 candidate，需游戏内试听；构建脚本 source_scores/kekemeiruguo_eop/build_shengrikuaile.py 可复跑。
 
 ## 1.0.0-beta.51 / Android 0.1.0-mvp-20260826-r2 - 2026-08-26
 
