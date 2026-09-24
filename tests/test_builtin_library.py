@@ -11,7 +11,7 @@ class BuiltinLibraryTests(unittest.TestCase):
         songs_dir = Path(__file__).resolve().parents[1] / "builtin_songs"
         paths = sorted(songs_dir.glob("*.txt"))
 
-        self.assertEqual(len(paths), 297)
+        self.assertEqual(len(paths), 301)
         for path in paths:
             with self.subTest(song=path.name):
                 program = parse_song_program(path)

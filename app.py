@@ -13,6 +13,7 @@ import threading
 import time
 import tkinter as tk
 import urllib.request
+import urllib.parse
 import webbrowser
 from tkinter import filedialog, messagebox, simpledialog, ttk
 
@@ -34,11 +35,11 @@ from preview_audio import LocalPreview
 
 
 APP_NAME = "21键弹琴自动化"
-APP_VERSION = "1.0.0-beta.52"
+APP_VERSION = "1.0.0-beta.55"
 HOTKEYS = [f"F{i}" for i in range(1, 13)]
-BUILTIN_LIBRARY_VERSION = 190
-UPDATE_MANIFEST_URL = "https://xiaxia.ymjhcycg.dpdns.org/updates/manifest.json"
-UPDATE_HISTORY_URL = "https://xiaxia.ymjhcycg.dpdns.org/updates/index.html"
+BUILTIN_LIBRARY_VERSION = 193
+UPDATE_MANIFEST_URL = "https://ygqpy.xyz/manifest.json"
+UPDATE_HISTORY_URL = "https://ygqpy.xyz/"
 PLAYBACK_RATE_MIN = 0.25
 PLAYBACK_RATE_MAX = 4.0
 PLAYBACK_RATE_PRESETS = ("0.50x", "0.75x", "1.00x", "1.25x", "1.50x", "2.00x", "3.00x", "4.00x")
@@ -198,6 +199,10 @@ RECOMMENDED_BEAT_MS = {
     "最伟大的作品": 419,
     "春庭雪": 800,
     "生日快乐": 600,
+    "若梦": 1034,
+    "雨爱（新宿对决版）": 418,
+    "永不失联的爱（简谱版）": 706,
+    "永不失联的爱（完整版）": 654,
     "可惜没如果（片段试听）": 750,
     "可惜没如果（双轨演示）": 750,
     "鸳鸯戏": 938,
@@ -1233,9 +1238,9 @@ class JianpuPlayerApp(tk.Tk):
 
         updates = ttk.LabelFrame(page, text="更新源", padding=16)
         updates.grid(row=3, column=0, sticky="ew", pady=(12, 0))
-        ttk.Button(updates, text="检查最新版本", command=self.check_for_updates, style="Inline.TButton").grid(row=0, column=0, sticky="w")
+        ttk.Button(updates, text="检查并更新", command=self.check_for_updates, style="Inline.TButton").grid(row=0, column=0, sticky="w")
         ttk.Button(updates, text="打开历史版本", command=lambda: webbrowser.open(UPDATE_HISTORY_URL), style="Quiet.TButton").grid(row=0, column=1, sticky="w", padx=8)
-        ttk.Label(updates, text="历史页可展开说明并选择旧版本下载。", style="MetaPanel.TLabel").grid(row=1, column=0, columnspan=2, sticky="w", pady=(8, 0))
+        ttk.Label(updates, text="发现新版本时可直接下载，也可打开历史页选择旧版本。", style="MetaPanel.TLabel").grid(row=1, column=0, columnspan=2, sticky="w", pady=(8, 0))
 
         actions = ttk.Frame(page, style="App.TFrame")
         actions.grid(row=4, column=0, sticky="ew", pady=(14, 0))
@@ -1248,7 +1253,9 @@ class JianpuPlayerApp(tk.Tk):
         self.status_var.set("正在连接更新源…")
 
         def show_result(manifest: dict) -> None:
-            latest = manifest.get("platforms", {}).get("windows", {}).get("latestVersion", manifest.get("version", "未知"))
+            windows_release = manifest.get("platforms", {}).get("windows", {})
+            latest = windows_release.get("latestVersion", manifest.get("version", "未知"))
+            download_path = windows_release.get("download")
             notes = manifest.get("releaseNotes", [])
             has_update = latest != APP_VERSION
             message = f"当前版本：{APP_VERSION}\n最新版本：{latest}\n曲库：{manifest.get('libraryCount', '?')} 首"
@@ -1256,8 +1263,13 @@ class JianpuPlayerApp(tk.Tk):
                 message += "\n\n本次更新：\n" + "\n".join(f"• {item}" for item in notes)
             self.status_var.set(f"发现新版本：{latest}" if has_update else "当前已经是最新版。")
             if has_update:
-                message += "\n\n是否打开更新中心？页面顶部可直接选择 Windows 或 Android 下载。"
-                if messagebox.askyesno("发现新版本", message, parent=self):
+                message += "\n\n选择“是”直接下载 Windows 最新版；选择“否”打开历史版本；选择“取消”暂不更新。"
+                choice = messagebox.askyesnocancel("发现新版本", message, parent=self)
+                if choice is True and download_path:
+                    webbrowser.open(urllib.parse.urljoin(UPDATE_MANIFEST_URL, download_path))
+                elif choice is True:
+                    webbrowser.open(UPDATE_HISTORY_URL)
+                elif choice is False:
                     webbrowser.open(UPDATE_HISTORY_URL)
             else:
                 messagebox.showinfo("检查更新", message, parent=self)
