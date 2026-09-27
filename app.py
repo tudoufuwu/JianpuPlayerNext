@@ -35,9 +35,9 @@ from preview_audio import LocalPreview
 
 
 APP_NAME = "21键弹琴自动化"
-APP_VERSION = "1.0.0-beta.55"
+APP_VERSION = "1.0.0-beta.56"
 HOTKEYS = [f"F{i}" for i in range(1, 13)]
-BUILTIN_LIBRARY_VERSION = 193
+BUILTIN_LIBRARY_VERSION = 194
 UPDATE_MANIFEST_URL = "https://ygqpy.xyz/manifest.json"
 UPDATE_HISTORY_URL = "https://ygqpy.xyz/"
 PLAYBACK_RATE_MIN = 0.25
@@ -203,6 +203,11 @@ RECOMMENDED_BEAT_MS = {
     "雨爱（新宿对决版）": 418,
     "永不失联的爱（简谱版）": 706,
     "永不失联的爱（完整版）": 654,
+    "Into the Sky": 696,
+    "Mr. Broken Heart": 465,
+    "Cage": 723,
+    "World is Mine": 706,
+    "闹够了没有": 833,
     "可惜没如果（片段试听）": 750,
     "可惜没如果（双轨演示）": 750,
     "鸳鸯戏": 938,

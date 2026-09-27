@@ -1,4 +1,11 @@
-# GitHub 发布交接（beta.50）
+# GitHub 发布交接（beta.56）
+
+## 当前发布版本 beta.56（2026-09-27）
+
+- Windows `1.0.0-beta.56`；Android `0.1.0-mvp-20260927`（versionCode 54）。
+- 双端曲库 306 首；曲库版本 194；新增《Into the Sky》《Mr. Broken Heart》《Cage》《World is Mine》《闹够了没有》。
+- 五首均为 candidate / requires_in_game_audition，发布文案必须保留“需游戏内试听”说明。
+- 更新源统一为 `https://ygqpy.xyz/manifest.json`，历史页为 `https://ygqpy.xyz/`；服务器上传需使用已配置的 SSH 主机和密钥。
 
 ## 待发布版本 beta.51（2026-08-26）
 

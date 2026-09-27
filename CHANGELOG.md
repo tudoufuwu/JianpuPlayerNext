@@ -1,5 +1,11 @@
 # 更新记录
 
+## 1.0.0-beta.56 / Android 0.1.0-mvp-20260927 - 2026-09-27
+
+- 双端曲库由 301 首增至 306 首，曲库版本更新为 194；新增《Into the Sky》（696 ms/拍）、《Mr. Broken Heart》（465 ms/拍）、《Cage》（723 ms/拍）、《World is Mine》（706 ms/拍）和《闹够了没有》（833 ms/拍）。
+- 五首均保留为 candidate / requires_in_game_audition：音频曲仅提取人声主旋律，图片谱仅取上方主旋律并简化伴奏；安装包发布说明需明确仍需游戏内试听。
+- Android 更新检查地址与 Windows 统一为 `https://ygqpy.xyz/manifest.json`，历史版本页为 `https://ygqpy.xyz/`。
+
 ## 1.0.0-beta.55 / Android 0.1.0-mvp-20260925 - 2026-09-25
 
 - 双端曲库由 299 首增至 301 首，曲库版本更新为 193；新增《永不失联的爱（简谱版）》（706 ms/拍）与《永不失联的爱（完整版）》（654 ms/拍）。

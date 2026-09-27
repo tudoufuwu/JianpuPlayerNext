@@ -5,8 +5,8 @@ param(
     [string]$RemoteRoot = "/var/www/update",
     [string]$SshKeyPath,
     [string[]]$ReleaseNotes = @(
-        "双端曲库更新至 301 首，新增《永不失联的爱（简谱版）》与《永不失联的爱（完整版）》。",
-        "推荐速度分别为 706 ms/拍与 654 ms/拍；两版均为 candidate，需游戏内试听。",
+        "双端曲库更新至 306 首，新增《World is Mine》《闹够了没有》《Cage》《Into the Sky》《Mr. Broken Heart》。",
+        "以上五首新增曲目均为 candidate，需游戏内试听。",
         "覆盖安装会保留用户导入和录制的 TXT 曲谱，历史版本仍可从更新页下载。"
     ),
     [switch]$Upload
@@ -15,14 +15,14 @@ param(
 $ErrorActionPreference = "Stop"
 $projectDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $androidDir = Join-Path (Split-Path -Parent $projectDir) "mobile_player_android"
-$windowsAsset = Join-Path $projectDir "dist\JianpuPlayerNext-v1.0.0-beta.55.exe"
+$windowsAsset = Join-Path $projectDir "dist\JianpuPlayerNext-v1.0.0-beta.56.exe"
 $androidAsset = Join-Path $androidDir "app\build\outputs\apk\debug\app-debug.apk"
 
 if (-not (Test-Path -LiteralPath $windowsAsset)) { throw "Windows artifact missing: $windowsAsset" }
 if (-not (Test-Path -LiteralPath $androidAsset)) { throw "Android artifact missing: $androidAsset" }
 if ($Upload -and [string]::IsNullOrWhiteSpace($ServerHost)) { throw "-ServerHost is required with -Upload" }
-if (-not (Get-Command ssh -ErrorAction SilentlyContinue)) { throw "ssh is required" }
-if (-not (Get-Command scp -ErrorAction SilentlyContinue)) { throw "scp is required" }
+if ($Upload -and -not (Get-Command ssh -ErrorAction SilentlyContinue)) { throw "ssh is required" }
+if ($Upload -and -not (Get-Command scp -ErrorAction SilentlyContinue)) { throw "scp is required" }
 
 $timestamp = Get-Date -Format "yyyyMMdd_HHmmss"
 $releaseDir = Join-Path $projectDir "publish\releases\$timestamp"
@@ -31,7 +31,7 @@ $androidReleaseDir = Join-Path $releaseDir "android"
 New-Item -ItemType Directory -Force -Path $windowsDir, $androidReleaseDir | Out-Null
 
 $windowsName = Split-Path -Leaf $windowsAsset
-$androidName = "PocketMusic21-v0.1.0-mvp-20260925-301songs-debug.apk"
+$androidName = "PocketMusic21-v0.1.0-mvp-20260927-306songs-debug.apk"
 $windowsTarget = Join-Path $windowsDir $windowsName
 $androidTarget = Join-Path $androidReleaseDir $androidName
 Copy-Item -LiteralPath $windowsAsset -Destination $windowsTarget
@@ -40,9 +40,9 @@ Copy-Item -LiteralPath $androidAsset -Destination $androidTarget
 $manifest = [ordered]@{
     schema = 2
     product = "JianpuPlayerNext / PocketMusic21"
-    version = "1.0.0-beta.55"
-    libraryCount = 301
-    androidVersion = "0.1.0-mvp-20260925"
+    version = "1.0.0-beta.56"
+    libraryCount = 306
+    androidVersion = "0.1.0-mvp-20260927"
     userContentPolicy = "User-imported and recorded TXT songs are stored outside bundled assets and preserved across updates."
     releaseId = $timestamp
     publishedAt = (Get-Date).ToUniversalTime().ToString("o")
@@ -52,8 +52,8 @@ $manifest = [ordered]@{
         userData = "User-recorded or imported TXT files must remain in the user's data directory and are not replaced by library updates."
     }
     platforms = [ordered]@{
-        windows = [ordered]@{ latestVersion = "1.0.0-beta.55"; download = "/windows/$windowsName"; archive = "/releases/$timestamp/windows/$windowsName"; sha256 = (Get-FileHash $windowsTarget -Algorithm SHA256).Hash.ToLowerInvariant() }
-        android = [ordered]@{ latestVersion = "0.1.0-mvp-20260925"; download = "/android/$androidName"; archive = "/releases/$timestamp/android/$androidName"; sha256 = (Get-FileHash $androidTarget -Algorithm SHA256).Hash.ToLowerInvariant() }
+        windows = [ordered]@{ latestVersion = "1.0.0-beta.56"; download = "/windows/$windowsName"; archive = "/releases/$timestamp/windows/$windowsName"; sha256 = (Get-FileHash $windowsTarget -Algorithm SHA256).Hash.ToLowerInvariant() }
+        android = [ordered]@{ latestVersion = "0.1.0-mvp-20260927"; download = "/android/$androidName"; archive = "/releases/$timestamp/android/$androidName"; sha256 = (Get-FileHash $androidTarget -Algorithm SHA256).Hash.ToLowerInvariant() }
     }
 }
 $manifestPath = Join-Path $releaseDir "manifest.json"
